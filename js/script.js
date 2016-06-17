@@ -72,27 +72,52 @@ var charted = {
 		
 		var deathData = model.firstDataInfo()[0];
 		var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Cause of Death');
+			data.addColumn('string', 'Ethnicity');
 			data.addColumn('number', 'Number of Deaths');
 
+		var usingArr = [];
+
+
 		for(var t=0; t<deathData.length; t++){
-			if(deathData[t].count>2000){
-				var countInt = parseInt(deathData[t].count);
-	        	var cause = deathData[t].cause_of_death;
-	//			console.log(deathData[t]);
-				data.addRows([
-					[cause, countInt]
-				]);
-			}
+	//		console.log(deathData[t]);
+			var info = deathData;
+			var unInfo = jQuery.unique(info);
+			console.log(unInfo);
+			var cause = unInfo[t].cause_of_death;
+			var ethnicity = ethnicity = deathData[t].ethnicity;
+			var AIDS = cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE";
+			var hispanic = ethnicity === "HISPANIC";
+			var white = ethnicity ==="NON-HISPANICE WHITE";
+			var male = unInfo[t].sex === "MALE";
+			
+			
+	
+				var countInt = parseInt(unInfo[t].count);
+				var greater = countInt>1000;
+				var cause = unInfo[t].cause_of_death;
+				var ethnicity = ethnicity = deathData[t].ethnicity;
+				var AIDS = cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE";
+				var hispanic = ethnicity === "HISPANIC";
+				var white = ethnicity ==="NON-HISPANICE WHITE";
+				
+				if(hispanic && male && greater){
+					//console.log(unInfo[t]);
 
-		}
-        var options = {'title':'Most Common NYC Deaths, 2007',
-                       'width':800,
-                       'height':800};
+						data.addRows([
+							[cause, countInt]
+						]);
+				//	var equal = deathData[t].cause_of_death !==
+		
+				}
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
+	    }
+	    	var options = {'title':'HIV Deaths, New York City 2007',
+	                       'width':800,
+	                       'height':800};
+
+	        // Instantiate and draw our chart, passing in some options.
+	        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+	        chart.draw(data, options);
 
       };
 
