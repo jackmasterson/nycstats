@@ -63,98 +63,39 @@ var charted = {
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(drawChart);
+    //  google.setOnLoadCallback(drawComp);
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
       function drawChart() {
-
-        // Create the data table.
-       /* var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'Pizza from Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-        chart.draw(data, options);*/
-
-       
-
-        //console.log(data);
-   
-        var deathData = model.firstDataInfo()[0];
-        console.log(deathData);
-       /* var dataArr = []
-       // console.log(deathData);
-       	//	console.log(info);
-       	var options = {'title': 'New York City Deateh Rates, 2007',
-					   'width': 400,
-					   'height': 300};
-
-       	for(var i=0; i<10; i++){
-       		var count = deathData[i].count;
-       	    var countInt = parseInt(deathData[i].count);
-       		var cause = deathData[i].cause_of_death;
-	        var data = [
-	        	['Cause', 'Count'],
-	        	[cause, countInt]
-	        ];
-	   //     console.log(data);
-
-	        dataArr.push(data);
-	      //  console.log(data);
-	      
- 		//	console.log(data, 'INNNNN');
-
-       	}
-       //	console.log(data, 'OUTTTWWTT');
-       console.log(dataArr);
-       		var data = new google.visualization.arrayToDataTable([
-	        	dataArr
-	        ],
-	        false);
-	        
-	       // var data = new google.visualization.arrayToDataTable([dataArr], false);
-	        var charted = new google.visualization.PieChart(document.getElementById('chart_div_two'));
-        	charted.draw(data, options);
-*/
-
-    	//var count = deathData[0].count;
- 
+		
+		var deathData = model.firstDataInfo()[0];
 		var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Cause of Death');
 			data.addColumn('number', 'Number of Deaths');
-		for(var t=0; t<10; t++){
-			var countInt = parseInt(deathData[t].count);
-        	var cause = deathData[t].cause_of_death;
-			
-			data.addRows([
-				[cause, countInt]
-			]);
-		}
 
-		        // Set chart options
-        var options = {'title':'Pizza from Last Night',
-                       'width':400,
-                       'height':300};
+		for(var t=0; t<deathData.length; t++){
+			if(deathData[t].count>2000){
+				var countInt = parseInt(deathData[t].count);
+	        	var cause = deathData[t].cause_of_death;
+	//			console.log(deathData[t]);
+				data.addRows([
+					[cause, countInt]
+				]);
+			}
+
+		}
+        var options = {'title':'Most Common NYC Deaths, 2007',
+                       'width':800,
+                       'height':800};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
         chart.draw(data, options);
 
-      }
+      };
+
   }
 };
 
