@@ -60,35 +60,85 @@ var charted = {
       function drawChart() {
 		//console.log('hey');
 		var info = model.firstDataInfo()[0];
+		var stat = model.firstDataInfo()[0];
 		
 		//	data.addColumn('string', 'Ethnicity');
 		//	data.addColumn('number', 'Number of Deaths');
 
-		var usingArr = [];
+		var hispArr = [];
+		var whiteArr = [];
+		var filterArr = [];
 
+		//console.log(info);
+		stat.forEach(function(info){
 
-		//deathData.forEach(function(info){
+		//	for(var b=0; b<info.length;b++){
+			//console.log(info);
+				var cause = info.cause_of_death;
+				var sex = info.sex;
+				var ethnicity = info.ethnicity;
+				var count = parseInt(info.count);
+				var counted = info.count;
+				var HIV = cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE";
+			//	console.log(HIV);
+				var male = sex === "MALE";
+				var hispanic = ethnicity === "HISPANIC";
+				var white = ethnicity === "NON-HISPANIC WHITE";
+			//	console.log(male);
 
-			for(var b=0; b<5;b++){
-				var cause = info[b].cause_of_death;
-				var sex = info[b].sex;
-				var ethnicity = info[b].ethnicity;
-				var count = parseInt(info[b].count);
-				var counted = info[b].count;
+				if(HIV && male){
+					if(hispanic){
+						hispArr.push(info)
+					}
+					if(white){
+						whiteArr.push(info)
+					}
+				//	console.log(info);
+				}
+			//}
+		//	console.log(usingArr);
 
 			
-				usingArr.push([cause, count])
-			}
-			
-	//	});
-		console.log(usingArr[0]);
-		var use = usingArr;
+		});
+	//	console.log(hispArr[0].number);
+	//	console.log(whiteArr);
+		var count = parseInt(info.count);
+		var hispInfo = [hispArr[0].ethnicity, parseInt(hispArr[0].count)];
+		var whiteInfo = [whiteArr[0].ethnicity, parseInt(whiteArr[0].count)];
+
+		var results = [];
+
+		results.push(hispInfo, whiteInfo);
+		console.log(results);
+/*		for (var g = 0; g < usingArr.length - 1; g++) {
+		//	console.log(usingArr[g]);
+			var first = usingArr[g];
+			var second = usingArr[g+1];
+			var equalCause = first.cause === second.cause;
+			var equalCount = first.count === second.count;
+			var equalEth = first.ethnicity === second.ethnicity;
+			var equalSex = first.sex === second.sex;
+			console.log(equalCause, equalCount, equalEth, equalSex);
+			//console.log(first, 'HEY', second);
+		//	console.log(usingArr[g+1]);
+		    if (equalCause && equalCount && equalEth && equalSex) {
+		//    	console.log(first);
+		        results.push(usingArr[g]);
+		    }
+		}*/
+	//	console.log(results);
+
+
+//console.log(eliminateDuplicates(usingArr[0]));
+	//console.log(usingArr.filter());
+		//console.log(usingArr.filter());
+	//	var use = usingArr;
 			var data = new google.visualization.DataTable();
-				data.addColumn("string", "Cause", "cause");
+				data.addColumn("string", "Ethnicity", "ethnicity");
 				data.addColumn("number", "Number of Deaths", "number");
-		console.log(use);
-		console.log(data);
-		data.addRows(usingArr);
+		//console.log(use);
+		//console.log(data);
+		data.addRows(results);
 		//console.log(data);
 		
 		
@@ -99,7 +149,7 @@ var charted = {
 	                       'height':800};
 
 	        // Instantiate and draw our chart, passing in some options.
-	        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+	        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 	        chart.draw(data, options);
 
       };
@@ -117,8 +167,8 @@ var charted = {
 
       // Instantiate and draw the chart.
       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, null);
-    }*/
+      chart.draw(data, null);*/
+ //   }
 
   }
 };
