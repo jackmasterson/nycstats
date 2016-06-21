@@ -76,11 +76,28 @@ var charted = {
 		var resultsMale = [];
 		var resultsFemale = [];
 
+		var heartMale = [];
+		var heartFemale = [];
+
+
 		stat.forEach(function(info){
 				var cause = info.cause_of_death;
 				var sex = info.sex;
 				var ethnicity = info.ethnicity;
 				var HIV = cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE";
+				var hep = cause === "VIRAL HEPATITIS";
+				var count = parseInt(info.count);
+				var greater = count>4000;
+				if(greater && male){
+					heartMale.push(info)
+				}
+				if(greater && female){
+					heartFemale.push(info)
+				}
+				//console.log(cause);
+	//			if(hep){
+	//				console.log(info);
+	//			}
 				var male = sex === "MALE";
 				var female = sex === "FEMALE";
 				var hispanic = ethnicity === "HISPANIC";
@@ -121,6 +138,9 @@ var charted = {
 
 		var blackInfoMale = [blackArrM[0].ethnicity, parseInt(blackArrM[0].count)];
 		var blackInfoFemale = [blackArrF[0].ethnicity, parseInt(blackArrF[0].count)];
+
+		var greaterMale = [heartMale[0].cause_of_death, parseInt(heartMale[0].count)];
+		var greaterFemale = [heartFemale[0].cause_of_death, parseInt(heartFemale[0].count)];
 		
 
 		resultsMale.push(hispInfoMale, whiteInfoMale, blackInfoMale);
@@ -151,6 +171,8 @@ var charted = {
 	        // Instantiate and draw our chart, passing in some options.
 	        var chartF = new google.visualization.PieChart(document.getElementById('chart_div_two'));
 	        chartF.draw(dataF, optionsF);
+
+
 
       };
   	}
