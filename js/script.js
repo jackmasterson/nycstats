@@ -61,73 +61,96 @@ var charted = {
 		//console.log('hey');
 		var info = model.firstDataInfo()[0];
 		var stat = model.firstDataInfo()[0];
-		
-		//	data.addColumn('string', 'Ethnicity');
-		//	data.addColumn('number', 'Number of Deaths');
 
-		var hispArr = [];
-		var whiteArr = [];
-		var blackArr = [];
+		var hispArrM = [];
+		var hispArrF = [];
+
+		var whiteArrM = [];
+		var whiteArrF = [];
+
+		var blackArrM = [];
+		var blackArrF = [];
+
 		var aapiArr = [];
-		var filterArr = [];
 
-		//console.log(info);
+		var resultsMale = [];
+		var resultsFemale = [];
+
 		stat.forEach(function(info){
-
-		//	for(var b=0; b<info.length;b++){
-			console.log(info.ethnicity);
 				var cause = info.cause_of_death;
 				var sex = info.sex;
 				var ethnicity = info.ethnicity;
-				var count = parseInt(info.count);
-				var counted = info.count;
 				var HIV = cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE";
-			//	console.log(HIV);
 				var male = sex === "MALE";
+				var female = sex === "FEMALE";
 				var hispanic = ethnicity === "HISPANIC";
 				var white = ethnicity === "NON-HISPANIC WHITE";
 				var aapi = ethnicity === "ASIAN & PACIFIC ISLANDER";
 				var black = ethnicity === "NON-HISPANIC BLACK";
-			//	console.log(black);
-			//	console.log(male);
-		//	console.log(aapi);
 
 				if(HIV && male){
 					if(hispanic){
-						hispArr.push(info)
+						hispArrM.push(info)
 					}
 					if(white){
-						whiteArr.push(info)
+						whiteArrM.push(info)
 					}
 					if(black){
-						blackArr.push(info);
+						blackArrM.push(info);
+					}
+				}
+				if(HIV && female){
+					if(hispanic){
+						hispArrF.push(info)
+					}
+					if(white){
+						whiteArrF.push(info)
+					}
+					if(black){
+						blackArrF.push(info);
 					}
 				}
 
 			
 		});
-		var hispInfo = [hispArr[0].ethnicity, parseInt(hispArr[0].count)];
-		var whiteInfo = [whiteArr[0].ethnicity, parseInt(whiteArr[0].count)];
-		var blackInfo = [blackArr[0].ethnicity, parseInt(blackArr[0].count)];
-		var results = [];
+		var hispInfoMale = [hispArrM[0].ethnicity, parseInt(hispArrM[0].count)];
+		var hispInfoFemale = [hispArrF[0].ethnicity, parseInt(hispArrF[0].count)];
 
-		results.push(hispInfo, whiteInfo, blackInfo);
+		var whiteInfoMale = [whiteArrM[0].ethnicity, parseInt(whiteArrM[0].count)];
+		var whiteInfoFemale = [whiteArrF[0].ethnicity, parseInt(whiteArrF[0].count)];
 
-			var data = new google.visualization.DataTable();
-				data.addColumn("string", "Ethnicity", "ethnicity");
-				data.addColumn("number", "Number of Deaths", "number");
-		data.addRows(results);
+		var blackInfoMale = [blackArrM[0].ethnicity, parseInt(blackArrM[0].count)];
+		var blackInfoFemale = [blackArrF[0].ethnicity, parseInt(blackArrF[0].count)];
 		
-		
-		console.log(data);
 
-	    	var options = {'title':'Deaths, New York City 2007',
-	                       'width':800,
-	                       'height':800};
+		resultsMale.push(hispInfoMale, whiteInfoMale, blackInfoMale);
+		resultsFemale.push(hispInfoFemale, whiteInfoFemale, blackInfoFemale);
+
+			var dataM = new google.visualization.DataTable();
+				dataM.addColumn("string", "Ethnicity", "ethnicity");
+				dataM.addColumn("number", "Number of Deaths", "number");
+				dataM.addRows(resultsMale);
+
+	    	var optionsM = {'title':'HIV Male Deaths, New York City 2007',
+	                       'width':600,
+	                       'height':600};
 
 	        // Instantiate and draw our chart, passing in some options.
-	        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-	        chart.draw(data, options);
+	        var chartM = new google.visualization.PieChart(document.getElementById('chart_div'));
+	        chartM.draw(dataM, optionsM);
+
+			var dataF = new google.visualization.DataTable();
+				dataF.addColumn("string", "Ethnicity", "ethnicity");
+				dataF.addColumn("number", "Number of Deaths", "number");
+				dataF.addRows(resultsFemale);
+
+	    	var optionsF = {'title':'HIV Female Deaths, New York City 2007',
+	                       'width':600,
+	                       'height':600};
+
+	        // Instantiate and draw our chart, passing in some options.
+	        var chartF = new google.visualization.PieChart(document.getElementById('chart_div_two'));
+	        chartF.draw(dataF, optionsF);
 
       };
   	}
