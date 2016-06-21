@@ -67,13 +67,15 @@ var charted = {
 
 		var hispArr = [];
 		var whiteArr = [];
+		var blackArr = [];
+		var aapiArr = [];
 		var filterArr = [];
 
 		//console.log(info);
 		stat.forEach(function(info){
 
 		//	for(var b=0; b<info.length;b++){
-			//console.log(info);
+			console.log(info.ethnicity);
 				var cause = info.cause_of_death;
 				var sex = info.sex;
 				var ethnicity = info.ethnicity;
@@ -84,7 +86,11 @@ var charted = {
 				var male = sex === "MALE";
 				var hispanic = ethnicity === "HISPANIC";
 				var white = ethnicity === "NON-HISPANIC WHITE";
+				var aapi = ethnicity === "ASIAN & PACIFIC ISLANDER";
+				var black = ethnicity === "NON-HISPANIC BLACK";
+			//	console.log(black);
 			//	console.log(male);
+		//	console.log(aapi);
 
 				if(HIV && male){
 					if(hispanic){
@@ -93,53 +99,24 @@ var charted = {
 					if(white){
 						whiteArr.push(info)
 					}
-				//	console.log(info);
+					if(black){
+						blackArr.push(info);
+					}
 				}
-			//}
-		//	console.log(usingArr);
 
 			
 		});
-	//	console.log(hispArr[0].number);
-	//	console.log(whiteArr);
-		var count = parseInt(info.count);
 		var hispInfo = [hispArr[0].ethnicity, parseInt(hispArr[0].count)];
 		var whiteInfo = [whiteArr[0].ethnicity, parseInt(whiteArr[0].count)];
-
+		var blackInfo = [blackArr[0].ethnicity, parseInt(blackArr[0].count)];
 		var results = [];
 
-		results.push(hispInfo, whiteInfo);
-		console.log(results);
-/*		for (var g = 0; g < usingArr.length - 1; g++) {
-		//	console.log(usingArr[g]);
-			var first = usingArr[g];
-			var second = usingArr[g+1];
-			var equalCause = first.cause === second.cause;
-			var equalCount = first.count === second.count;
-			var equalEth = first.ethnicity === second.ethnicity;
-			var equalSex = first.sex === second.sex;
-			console.log(equalCause, equalCount, equalEth, equalSex);
-			//console.log(first, 'HEY', second);
-		//	console.log(usingArr[g+1]);
-		    if (equalCause && equalCount && equalEth && equalSex) {
-		//    	console.log(first);
-		        results.push(usingArr[g]);
-		    }
-		}*/
-	//	console.log(results);
+		results.push(hispInfo, whiteInfo, blackInfo);
 
-
-//console.log(eliminateDuplicates(usingArr[0]));
-	//console.log(usingArr.filter());
-		//console.log(usingArr.filter());
-	//	var use = usingArr;
 			var data = new google.visualization.DataTable();
 				data.addColumn("string", "Ethnicity", "ethnicity");
 				data.addColumn("number", "Number of Deaths", "number");
-		//console.log(use);
-		//console.log(data);
 		data.addRows(results);
-		//console.log(data);
 		
 		
 		console.log(data);
@@ -153,24 +130,7 @@ var charted = {
 	        chart.draw(data, options);
 
       };
-   /*       function drawChart() {
-          	var using =  [['Nitrogen', 0.78],
-        ['Oxygen', 0.21],
-        ['Other', 0.01]];
-      // Define the chart to be drawn.
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Element');
-      data.addColumn('number', 'Percentage');
-      data.addRows(
- 		using
-      );
-
-      // Instantiate and draw the chart.
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, null);*/
- //   }
-
-  }
+  	}
 };
 
 
