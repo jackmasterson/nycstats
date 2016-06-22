@@ -139,8 +139,8 @@ var charted = {
 		var blackInfoMale = [blackArrM[0].ethnicity, parseInt(blackArrM[0].count)];
 		var blackInfoFemale = [blackArrF[0].ethnicity, parseInt(blackArrF[0].count)];
 
-		var greaterMale = [heartMale[0].cause_of_death, parseInt(heartMale[0].count)];
-		var greaterFemale = [heartFemale[0].cause_of_death, parseInt(heartFemale[0].count)];
+	//	var greaterMale = [heartMale[0].cause_of_death, parseInt(heartMale[0].count)];
+	//	var greaterFemale = [heartFemale[0].cause_of_death, parseInt(heartFemale[0].count)];
 		
 
 		resultsMale.push(hispInfoMale, whiteInfoMale, blackInfoMale);
