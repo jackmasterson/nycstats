@@ -8,13 +8,19 @@
 </head>
 <body>
 	<div class="search-param-div">
-
 		<select class="gender-filter" name="Gender">
 			<option class="male" value="male">Male</option>
 			<option class="female" value="female">Female</option>
 		</select>
-		<button data-bind="click: filter.init" class="search-gender">Gender Search!</button>
+
+		<select class="cause-filter" name="Cause">
+			<option class="cause-opt" value="INFLUENZA AND PNEUMONIA">Flu/Pneumonia</option>
+			<option class="cause-opt" value="DISEASES OF HEART">Diseases of the Heart</option>
+			<option class="cause-opt" value="MALIGNANT NEOPLASMS">Malignant Neoplasms</option>
+		</select>
+		<button data-bind="click: filter.init" class="search-gender">Search!</button>
 	</div>
+
 
 	<script src="js/lib/knockout-3.2.0.js"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi">
