@@ -44,6 +44,8 @@ var filter = {
 		filter.info = model.firstDataInfo()[0];
 		filter.gender = document.getElementsByClassName('gender-filter')[0];
 		filter.causeFilt = document.getElementsByClassName('cause-filter')[0];
+		filter.chartFilt = document.getElementsByClassName('chart-filter')[0];
+		filter.chartVal = filter.chartFilt.value;
 		filter.genVal = filter.gender.value;
 		filter.causeVal = filter.causeFilt.value;
 
@@ -181,7 +183,12 @@ var filter = {
       		var gen = document.getElementById(filter.causeVal+'_chart_'+filter.genVal);
       		//var chartPie = new google.visualization.PieChart(pie);
       		//var chartBar = new google.visualization.BarChart(bar);
-      		var genderBar = new google.visualization.BarChart(gen);
+      		if(filter.chartVal === "PieChart"){
+	      		var genderBar = new google.visualization.PieChart(gen);
+	      	}
+	      	if(filter.chartVal === "BarChart"){
+	      		var genderBar = new google.visualization.BarChart(gen);
+	      	}
       		genderBar.draw(data, options);
       		//chartPie.draw(data, options);
       		//chartBar.draw(data, options);
