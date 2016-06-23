@@ -190,6 +190,7 @@ var filter = {
 	male: function() {
 		console.log('male!!');
 		filter.using = [];
+		filter.sex = '';
 		this.info.forEach(function(data){
 			filter.sex = data.sex;
 			if(filter.sex === "MALE"){
@@ -204,6 +205,7 @@ var filter = {
 	female: function() {
 		console.log('female!!');
 		filter.using = [];
+		filter.sex = '';
 		this.info.forEach(function(data){
 			filter.sex = data.sex;
 			if(filter.sex === "FEMALE"){
@@ -257,14 +259,7 @@ var filter = {
 
 		filter.charted = [chartWhite, chartBlack, chartHispanic];
 		console.log(filter.charted);
-      	
 
-    //  google.setOnLoadCallback(drawComp);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-     // console.log('hey');
       function drawChart() {
       	console.log('drawn!');
       	var data = new google.visualization.DataTable();
@@ -272,12 +267,19 @@ var filter = {
       		data.addColumn("number", "Number of Deaths", "number");
       		data.addRows(filter.charted);
 
-      		var options = {"title": "2007 HIV Deaths in NYC ",
-      					   "width": 600,
-      					   "height": 600};
+      		var options = {"title": "2007 HIV Deaths in NYC",
+      					   "width": 400,
+      					   "height": 400};
 
-      		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      		chart.draw(data, options);
+      		var pie = document.getElementById('chart_div');
+
+      		var chartPie = new google.visualization.PieChart(pie);
+
+      		var el = "<div id='chart_div_'>Find out how to assign new ids to me!</div>";
+      		$('body').append(el);
+      		var chartBar = new google.visualization.BarChart(document.getElementById('chart_div_two'));
+      		chartPie.draw(data, options);
+      		chartBar.draw(data, options);
       };
       
 
