@@ -7,6 +7,14 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<div class="search-param-div">
+
+		<select class="gender-filter" name="Gender">
+			<option class="male" value="male">Male</option>
+			<option class="female" value="female">Female</option>
+		</select>
+		<button data-bind="click: filter.init" class="search-gender">Gender Search!</button>
+	</div>
 	<div class="chart" id="chart_div"></div>
 	<div class="chart" id="chart_div_two"></div>
 	<script src="js/lib/knockout-3.2.0.js"></script>

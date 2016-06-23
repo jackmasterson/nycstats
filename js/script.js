@@ -10,7 +10,10 @@ var model = {
 var viewModel = {
 	init: function() {
 	//	using.init();
-		charted.init();
+	//	charted.init();
+	//	filter.init();
+	//filter.chartIt();
+
 	}
 }
 
@@ -19,33 +22,23 @@ $.ajax({
 	dataType: "json"
 })
 .done(function(data){
-	//console.log(data);
-	function unique(list) {
-	    var result = [];
-	    $.each(list, function(i, e) {
-	        if ($.inArray(e, result) == -1) result.push(e);
-	    });
-	    return result;
-	}
-	var dupRemove = unique(data);
-	model.firstDataInfo().push(dupRemove);
-	//console.log(dupRemove);
-	firstData.init();
+
+	model.firstDataInfo().push(data);
+
+	//firstData.init();
+	//filter.init();
 
 });
 
 var firstData = {
 
 	init: function() {
-		model.firstDataInfo()[0].forEach(function(info){
-			//console.log(info);
-			
-		});
+
 	}
 };
 
 
-var charted = {
+/*var charted = {
 	// Load the Visualization API and the corechart package.
       init: function() {
       	google.load('visualization', '1.0', {'packages':['corechart']});
@@ -88,17 +81,17 @@ var charted = {
 				var hep = cause === "VIRAL HEPATITIS";
 				var count = parseInt(info.count);
 				var greater = count>4000;
-				if(greater && male){
+		/*		if(greater && male){
 					heartMale.push(info)
 				}
 				if(greater && female){
 					heartFemale.push(info)
-				}
+				}*/
 				//console.log(cause);
 	//			if(hep){
 	//				console.log(info);
 	//			}
-				var male = sex === "MALE";
+		/*		var male = sex === "MALE";
 				var female = sex === "FEMALE";
 				var hispanic = ethnicity === "HISPANIC";
 				var white = ethnicity === "NON-HISPANIC WHITE";
@@ -172,11 +165,167 @@ var charted = {
 	        var chartF = new google.visualization.PieChart(document.getElementById('chart_div_two'));
 	        chartF.draw(dataF, optionsF);
 
-
-
       };
   	}
-};
+};*/
+
+var filter = {
+	
+	init: function() {
+		var that = this;
+		filter.info = model.firstDataInfo()[0];
+
+		var ethnicFilter = document.getElementsByClassName('ethnicity-filter')[0];
+		var gender = document.getElementsByClassName('gender-filter')[0];
+		var genVal = gender.value;
+
+		if(genVal === "male"){
+			filter.male();
+		}
+		if(genVal === "female"){
+			filter.female();
+		}
+	},
+
+	male: function() {
+		console.log('male!!');
+		filter.using = [];
+		this.info.forEach(function(data){
+			filter.sex = data.sex;
+			if(filter.sex === "MALE"){
+				//console.log(data);
+				filter.using.push(data);
+			}
+		
+		});
+		filter.chartData();
+	},
+
+	female: function() {
+		console.log('female!!');
+		filter.using = [];
+		this.info.forEach(function(data){
+			filter.sex = data.sex;
+			if(filter.sex === "FEMALE"){
+				//console.log(data);
+				filter.using.push(data);
+			}
+		});
+		filter.chartData()
+	},
+
+	chartData: function() {
+		filter.chartWhite = [];
+		filter.chartBlack = [];
+		filter.chartAsian = [];
+		filter.chartHispanic = [];
+
+		filter.using.forEach(function(more){
+			var ethnicity = more.ethnicity;
+			var cause = more.cause_of_death;
+			var white = ethnicity === "NON-HISPANIC WHITE";
+			var black = ethnicity === "NON-HISPANIC BLACK";
+			var hispanic = ethnicity === "HISPANIC";
+			var HIV = cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE";
+			if(HIV && white){
+				filter.chartWhite.push(more);
+			}
+			if(HIV && black){
+				filter.chartBlack.push(more);
+			}
+			if(HIV && hispanic){
+				filter.chartHispanic.push(more);
+			}
+		});
+		filter.chartIt();
+
+	},
+
+	chartIt: function() {
+		console.log('time to get to work');
+		google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawChart});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      	
+		var chartWhite = [filter.chartWhite[0].ethnicity, 
+			parseInt(filter.chartWhite[0].count)];
+		var chartBlack = [filter.chartBlack[0].ethnicity, 
+			parseInt(filter.chartBlack[0].count)];
+		var chartHispanic = [filter.chartHispanic[0].ethnicity,
+			parseInt(filter.chartHispanic[0].count)];
+
+
+		filter.charted = [chartWhite, chartBlack, chartHispanic];
+		console.log(filter.charted);
+      	
+
+    //  google.setOnLoadCallback(drawComp);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+     // console.log('hey');
+      function drawChart() {
+      	console.log('drawn!');
+      	var data = new google.visualization.DataTable();
+      		data.addColumn("string", "Ethnicity", "ethnicity");
+      		data.addColumn("number", "Number of Deaths", "number");
+      		data.addRows(filter.charted);
+
+      		var options = {"title": "2007 HIV Deaths in NYC ",
+      					   "width": 600,
+      					   "height": 600};
+
+      		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      		chart.draw(data, options);
+      };
+      
+
+	}/*,
+
+	white: function() {
+		filter.using = [];
+		this.info.forEach(function(data){
+			var ethnicity = data.ethnicity
+			var white = ethnicity === "NON-HISPANIC WHITE";
+			if(white){
+				filter.using.push(data);
+				console.log(filter.using);
+			}
+		})
+	},
+
+	black: function() {
+		filter.using = [];
+		this.info.forEach(function(data){
+			var ethnicity = data.ethnicity
+			var black = ethnicity === "NON-HISPANIC BLACK";
+			if(black){
+
+				filter.using.push(data);
+				console.log(filter.using);
+			}
+		})
+	},
+
+	asian: function() {
+		console.log('asianified');
+	},
+
+	hispanic: function() {
+		filter.using = [];
+		this.info.forEach(function(data){
+			var ethnicity = data.ethnicity
+			var hispanic = ethnicity === "HISPANIC";
+			if(hispanic){
+
+				filter.using.push(data);
+				console.log(filter.using);
+			}
+		})
+		//console.log('his-wahhhht');
+	}*/
+}
 
 
 
