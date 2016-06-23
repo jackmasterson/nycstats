@@ -172,6 +172,7 @@ var firstData = {
 var filter = {
 	
 	init: function() {
+		filter.sex = '';
 		var that = this;
 		filter.info = model.firstDataInfo()[0];
 
@@ -190,7 +191,7 @@ var filter = {
 	male: function() {
 		console.log('male!!');
 		filter.using = [];
-		filter.sex = '';
+	//	filter.sex = '';
 		this.info.forEach(function(data){
 			filter.sex = data.sex;
 			if(filter.sex === "MALE"){
@@ -205,7 +206,7 @@ var filter = {
 	female: function() {
 		console.log('female!!');
 		filter.using = [];
-		filter.sex = '';
+		
 		this.info.forEach(function(data){
 			filter.sex = data.sex;
 			if(filter.sex === "FEMALE"){
@@ -256,12 +257,23 @@ var filter = {
 		var chartHispanic = [filter.chartHispanic[0].ethnicity,
 			parseInt(filter.chartHispanic[0].count)];
 
+      		var pieEl = "<div class='chart' id='chart_div'></div>";
+      		$('body').append(pieEl);
+      	//	console.log(pieEl);
 
+      		
+      		var barEl = "<div class='chart' id='chart_div_two'></div>";
+      		$('body').append(barEl);
+
+
+
+      	//	$('body').append(barEl);
 		filter.charted = [chartWhite, chartBlack, chartHispanic];
 		console.log(filter.charted);
-
       function drawChart() {
       	console.log('drawn!');
+
+		//console.log(document.getElementsByClassName('class'));
       	var data = new google.visualization.DataTable();
       		data.addColumn("string", "Ethnicity", "ethnicity");
       		data.addColumn("number", "Number of Deaths", "number");
@@ -271,12 +283,15 @@ var filter = {
       					   "width": 400,
       					   "height": 400};
 
+
       		var pie = document.getElementById('chart_div');
 
       		var chartPie = new google.visualization.PieChart(pie);
+      		
 
-      		var el = "<div id='chart_div_'>Find out how to assign new ids to me!</div>";
-      		$('body').append(el);
+
+
+      		//$('body').append(el);
       		var chartBar = new google.visualization.BarChart(document.getElementById('chart_div_two'));
       		chartPie.draw(data, options);
       		chartBar.draw(data, options);
