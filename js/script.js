@@ -140,9 +140,8 @@ var filter = {
   		var pieId = filter.causeVal+"_chart_"+filter.genVal+"_pie";
   		var barEl = "<div class='chart "+filter.genVal+"' id='"+barId+"'></div>";
 		var pieEl = "<div class='chart "+filter.genVal+"' id='"+pieId+"'></div>";
-		var countEl = "<div class='count-div'>Total Number of Visits: <span class='count-span'></span></div>";
-	//	console.log(barEl);
-		$('.first').prepend(countEl);
+		//	console.log(barEl);
+		//$('.first').prepend(countEl);
   		$('.first').prepend(pieEl);
   		//console.log(document.getElementsByClassName('first')[0]);
   		$('.first').prepend(barEl);
