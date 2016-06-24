@@ -30,7 +30,7 @@ var ajax = {
 		//console.log(ajax.yearVal);
 	//	console.log(yearSearch.value);
 		ajax.yearVal = ajax.yearSearch.value;
-		ajax.url = "https://data.cityofnewyork.us/resource/uvxr-2jwn.json?year="+ajax.yearVal;
+		//ajax.url = "https://health.data.ny.gov/resource/9p95-5ez3.json?patient_county_name=Duchess";
 		ajax.render();
 	},
 
@@ -40,11 +40,12 @@ var ajax = {
 	//	console.log(ajax.url);
 	//	console.log(ajax.url);
 		$.ajax({
-			url: ajax.url,
+			url: "https://health.data.ny.gov/resource/9p95-5ez3.json?patient_county_code=60",
 			dataType: "json"
 		})
 		.done(function(data){
 			//console.log(data);
+			console.log(data);
 			model.firstDataInfo().push(data);
 
 			//firstData.init();
