@@ -44,12 +44,8 @@ var ajax = {
 			dataType: "json"
 		})
 		.done(function(data){
-			//console.log(data);
-		//	console.log(data);
-			model.firstDataInfo().push(data);
 
-			//firstData.init();
-			//filter.init();
+			model.firstDataInfo().push(data);
 			filter.init();
 		});
 
@@ -68,13 +64,14 @@ var filter = {
 		filter.payerVal = filter.payer.value;
 
 		filter.info.forEach(function(data){
+		//	console.log(data);
+			console.log(data.payer, data.overall_opioid, data.year);
 			var both = filter.payerVal === data.payer;
 			if(both){
-		//		console.log(data.payer, data.year);
 				filter.genArr.push(data);
-		//		console.log(data);
 			}
 		});
+
 		filter.chartData();
 		
 
@@ -147,7 +144,7 @@ var filter = {
   		$('.first').prepend(barEl);
   		
   		var counter = document.getElementsByClassName('count-span')[0];
-  		console.log(counter);
+  	//	console.log(counter);
 
   	/*	function counted() {
 
