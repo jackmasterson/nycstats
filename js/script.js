@@ -37,8 +37,8 @@ var ajax = {
 	render: function() {
 
 		var that = this;
-		console.log(ajax.url);
-		console.log(ajax.url);
+	//	console.log(ajax.url);
+	//	console.log(ajax.url);
 		$.ajax({
 			url: ajax.url,
 			dataType: "json"
@@ -60,7 +60,7 @@ var filter = {
 	init: function() {
 		var that = this;
 
-		console.log(model.firstDataInfo()[0]);
+		//console.log(model.firstDataInfo()[0]);
 		filter.info = model.firstDataInfo()[0];
 		filter.gender = document.getElementsByClassName('gender-filter')[0];
 		filter.causeFilt = document.getElementsByClassName('cause-filter')[0];
@@ -158,30 +158,43 @@ var filter = {
 
 	chartIt: function() {
 		google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawChart});
-
+		var whiteCount = parseInt(filter.chartWhite[0].count);
+		var blackCount = parseInt(filter.chartBlack[0].count)
+		var hispanicCount = parseInt(filter.chartHispanic[0].count)
       	
 		var chartWhite = [filter.chartWhite[0].ethnicity, 
-			parseInt(filter.chartWhite[0].count)];
+			whiteCount];
 		var chartBlack = [filter.chartBlack[0].ethnicity, 
-			parseInt(filter.chartBlack[0].count)];
+			blackCount];
 		var chartHispanic = [filter.chartHispanic[0].ethnicity,
-			parseInt(filter.chartHispanic[0].count)];
+			hispanicCount];
 
   		var barId = filter.causeVal+"_chart_"+filter.genVal+"_bar";
   		var pieId = filter.causeVal+"_chart_"+filter.genVal+"_pie";
   		var barEl = "<div class='chart "+filter.genVal+"' id='"+barId+"'></div>";
 		var pieEl = "<div class='chart "+filter.genVal+"' id='"+pieId+"'></div>";
-		console.log(barEl);
+		var countEl = "<div class='count-div'>Total Number of Deaths: <span class='count-span'></span></div>";
+	//	console.log(barEl);
+		$('.first').prepend(countEl);
   		$('.first').prepend(pieEl);
-  		console.log(document.getElementsByClassName('first')[0]);
+  		//console.log(document.getElementsByClassName('first')[0]);
   		$('.first').prepend(barEl);
+  		
+  		var counter = document.getElementsByClassName('count-span')[0];
+  		console.log(counter);
 
+  		function counted() {
+
+  			counter.innerHTML = whiteCount + blackCount + hispanicCount;
+
+  		};
+  		counted();
 
 		filter.charted = [chartWhite, chartBlack, chartHispanic];
 
-      function drawChart() {
+        function drawChart() {
 
-      	var data = new google.visualization.DataTable();
+      	 var data = new google.visualization.DataTable();
       		data.addColumn("string", "Ethnicity", "ethnicity");
       		data.addColumn("number", "Number of Deaths", "number");
       		data.addRows(filter.charted);
@@ -191,7 +204,7 @@ var filter = {
       					   "height": 300};
 
       		var pie = document.getElementById(filter.causeVal+'_chart_'+filter.genVal+'_pie');
-      		console.log(pie);
+      	//	console.log(pie);
       		var bar = document.getElementById(filter.causeVal+'_chart_'+filter.genVal+'_bar');
      	//	if(filter.chartVal === "PieChart"){
 	      		var pieChart = new google.visualization.PieChart(pie);
