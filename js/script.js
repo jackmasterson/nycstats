@@ -186,7 +186,7 @@ var filter = {
       		data.addColumn("number", "Number of Deaths", "number");
       		data.addRows(filter.charted);
 
-      		var options = {"title": "2007 "+filter.causeVal+" Deaths in NYC, "+filter.gender.value,
+      		var options = {"title": ajax.yearVal+" "+filter.causeVal+" Deaths in NYC, "+filter.gender.value,
       					   "width": 300,
       					   "height": 300};
 
