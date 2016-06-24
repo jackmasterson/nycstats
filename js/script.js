@@ -25,11 +25,11 @@ var ajax = {
 		if(model.firstDataInfo()[0] !== undefined){
 			model.firstDataInfo.removeAll();
 		}
-		ajax.yearSearch = document.getElementsByClassName('year-search')[0];
+		//ajax.yearSearch = document.getElementsByClassName('year-search')[0];
 		//ajax.yearVal = yearSearch.value;
 		//console.log(ajax.yearVal);
 	//	console.log(yearSearch.value);
-		ajax.yearVal = ajax.yearSearch.value;
+		//ajax.yearVal = ajax.yearSearch.value;
 		//ajax.url = "https://health.data.ny.gov/resource/9p95-5ez3.json?patient_county_name=Duchess";
 		ajax.render();
 	},
@@ -45,7 +45,7 @@ var ajax = {
 		})
 		.done(function(data){
 			//console.log(data);
-			console.log(data);
+		//	console.log(data);
 			model.firstDataInfo().push(data);
 
 			//firstData.init();
@@ -61,94 +61,59 @@ var filter = {
 	init: function() {
 		var that = this;
 
-		//console.log(model.firstDataInfo()[0]);
 		filter.info = model.firstDataInfo()[0];
-		filter.gender = document.getElementsByClassName('gender-filter')[0];
-		filter.causeFilt = document.getElementsByClassName('cause-filter')[0];
-		filter.chartFilt = document.getElementsByClassName('chart-filter')[0];
-		//filter.chartVal = filter.chartFilt.value;
-		filter.genVal = filter.gender.value;
-		filter.causeVal = filter.causeFilt.value;
-
-		if(filter.genVal === "male"){
-			filter.male();
-		}
-		if(filter.genVal === "female"){
-			filter.female();
-		}
-
-	},
-
-	male: function() {
-
 		filter.genArr = [];
 
-		this.info.forEach(function(data){
-			filter.sex = data.sex;
-			if(filter.sex === "MALE"){
+		filter.payer = document.getElementsByClassName('payer-filter')[0];
+		filter.payerVal = filter.payer.value;
 
+		filter.info.forEach(function(data){
+			var both = filter.payerVal === data.payer;
+			if(both){
+		//		console.log(data.payer, data.year);
 				filter.genArr.push(data);
-			}
-		
-		});
-		filter.chartDisease();
-	},
-
-	female: function() {
-
-		filter.genArr = [];
-		
-		this.info.forEach(function(data){
-			filter.sex = data.sex;
-			if(filter.sex === "FEMALE"){
-
-				filter.genArr.push(data);
-			}
-		});
-		filter.chartDisease();
-	},
-
-	chartDisease: function() {
-
-		filter.using = [];
-		filter.genArr.forEach(function(data){
-
-			var cause = data.cause_of_death;
-
-			if(cause === filter.causeVal){
-	
-				filter.using.push(data);
+		//		console.log(data);
 			}
 		});
 		filter.chartData();
+		
+
 	},
 
 	chartData: function() {
-		filter.chartWhite = [];
-		filter.chartBlack = [];
-		filter.chartAsian = [];
-		filter.chartHispanic = [];
+		filter.tenArr = [];
+		filter.elevenArr = [];
+		filter.twelveArr = [];
+		filter.thirteenArr = [];
+		filter.fourteenArr = [];
+		filter.fifteenArr = [];
 
-		filter.using.forEach(function(more){
-			//console.log(more);
-			var ethnicity = more.ethnicity;
-			var cause = more.cause_of_death;
-			var white = ethnicity === "NON-HISPANIC WHITE";
-			var black = ethnicity === "NON-HISPANIC BLACK";
-			var hispanic = ethnicity === "HISPANIC";
-			var asian = ethnicity === "ASIAN & PACIFIC ISLANDER";
-			var HIV = cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE";
-			if(white){
-				filter.chartWhite.push(more);
+		filter.genArr.forEach(function(more){
+			var year = more.year;
+			var ten = year === "2010";
+			var eleven = year === "2011";
+			var twelve = year === "2012";
+			var thirteen = year === "2013";
+			var fourteen = year === "2014";
+			var fifteen = year === "2015";
+			
+			if(ten){
+				filter.tenArr.push(more);
 			}
-			if(black){
-				filter.chartBlack.push(more);
+			if(eleven){
+				filter.elevenArr.push(more);
 			}
-			if(hispanic){
-				filter.chartHispanic.push(more);
+			if(twelve){
+				filter.twelveArr.push(more);
 			}
-			if(asian){
-				filter.chartAsian.push(more);
+			if(thirteen){
+				filter.thirteenArr.push(more);
+			}
+			if(fourteen){
+				filter.fourteenArr.push(more);
+			}
+			if(fifteen){
+				filter.fifteenArr.push(more);
 			}
 		});
 		filter.chartIt();
@@ -157,24 +122,25 @@ var filter = {
 
 	chartIt: function() {
 		google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawChart});
-		var whiteCount = parseInt(filter.chartWhite[0].count);
-		var blackCount = parseInt(filter.chartBlack[0].count);
-		var hispanicCount = parseInt(filter.chartHispanic[0].count);
-		var asianCount = parseInt(filter.chartAsian[0].count);
       	
-		var chartWhite = [filter.chartWhite[0].ethnicity, 
-			whiteCount];
-		var chartBlack = [filter.chartBlack[0].ethnicity, 
-			blackCount];
-		var chartHispanic = [filter.chartHispanic[0].ethnicity,
-			hispanicCount];
-		var chartAsian = [filter.chartAsian[0].ethnicity, asianCount];
+		var ten = [filter.tenArr[0].year,
+			parseInt(filter.tenArr[0].overall_opioid)];
+		var eleven = [filter.elevenArr[0].year,
+			parseInt(filter.elevenArr[0].overall_opioid)];
+		var twelve = [filter.twelveArr[0].year,
+			parseInt(filter.twelveArr[0].overall_opioid)];
+		var thirteen = [filter.thirteenArr[0].year,
+			parseInt(filter.thirteenArr[0].overall_opioid)];
+		var fourteen = [filter.fourteenArr[0].year,
+			parseInt(filter.fourteenArr[0].overall_opioid)];
+		var fifteen = [filter.fifteenArr[0].year,
+			parseInt(filter.fifteenArr[0].overall_opioid)];
 
   		var barId = filter.causeVal+"_chart_"+filter.genVal+"_bar";
   		var pieId = filter.causeVal+"_chart_"+filter.genVal+"_pie";
   		var barEl = "<div class='chart "+filter.genVal+"' id='"+barId+"'></div>";
 		var pieEl = "<div class='chart "+filter.genVal+"' id='"+pieId+"'></div>";
-		var countEl = "<div class='count-div'>Total Number of Deaths: <span class='count-span'></span></div>";
+		var countEl = "<div class='count-div'>Total Number of Visits: <span class='count-span'></span></div>";
 	//	console.log(barEl);
 		$('.first').prepend(countEl);
   		$('.first').prepend(pieEl);
@@ -184,37 +150,37 @@ var filter = {
   		var counter = document.getElementsByClassName('count-span')[0];
   		console.log(counter);
 
-  		function counted() {
+  	/*	function counted() {
 
   			counter.innerHTML = whiteCount + blackCount + hispanicCount +
   				asianCount;
 
   		};
-  		counted();
+  		counted();*/
 
-		filter.charted = [chartWhite, chartBlack, chartHispanic, chartAsian];
+		filter.charted = [ten, eleven, twelve, thirteen, fourteen, fifteen];
 
         function drawChart() {
 
       	 var data = new google.visualization.DataTable();
-      		data.addColumn("string", "Ethnicity", "ethnicity");
-      		data.addColumn("number", "Number of Deaths", "number");
+      		data.addColumn("string", "Year", "year");
+      		data.addColumn("number", "Number of Visits", "number");
       		data.addRows(filter.charted);
 
-      		var options = {"title": ajax.yearVal+" "+filter.causeVal+" Deaths in NYC, "+filter.gender.value,
-      					   "width": 300,
-      					   "height": 300};
+      		var options = {"title": "Opioid Hospital Visits in NYC paid by "+filter.payerVal,
+      					   "width": 350,
+      					   "height": 400};
 
       		var pie = document.getElementById(filter.causeVal+'_chart_'+filter.genVal+'_pie');
       	//	console.log(pie);
       		var bar = document.getElementById(filter.causeVal+'_chart_'+filter.genVal+'_bar');
      	//	if(filter.chartVal === "PieChart"){
-	      		var pieChart = new google.visualization.PieChart(pie);
+	      		var lineChart = new google.visualization.LineChart(pie);
 	      //	}
 	      	//if(filter.chartVal === "BarChart"){
 	      		var barChart = new google.visualization.BarChart(bar);
 	      	//}
-      		pieChart.draw(data, options);
+      		lineChart.draw(data, options);
       		barChart.draw(data, options);
       };
 	}
