@@ -75,9 +75,7 @@ var filter = {
 		if(filter.genVal === "female"){
 			filter.female();
 		}
-		if(filter.genVal === "compare"){
-			filter.compare();
-		}
+
 	},
 
 	male: function() {
@@ -159,8 +157,9 @@ var filter = {
 	chartIt: function() {
 		google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawChart});
 		var whiteCount = parseInt(filter.chartWhite[0].count);
-		var blackCount = parseInt(filter.chartBlack[0].count)
-		var hispanicCount = parseInt(filter.chartHispanic[0].count)
+		var blackCount = parseInt(filter.chartBlack[0].count);
+		var hispanicCount = parseInt(filter.chartHispanic[0].count);
+		var asianCount = parseInt(filter.chartAsian[0].count);
       	
 		var chartWhite = [filter.chartWhite[0].ethnicity, 
 			whiteCount];
@@ -168,6 +167,7 @@ var filter = {
 			blackCount];
 		var chartHispanic = [filter.chartHispanic[0].ethnicity,
 			hispanicCount];
+		var chartAsian = [filter.chartAsian[0].ethnicity, asianCount];
 
   		var barId = filter.causeVal+"_chart_"+filter.genVal+"_bar";
   		var pieId = filter.causeVal+"_chart_"+filter.genVal+"_pie";
@@ -185,12 +185,13 @@ var filter = {
 
   		function counted() {
 
-  			counter.innerHTML = whiteCount + blackCount + hispanicCount;
+  			counter.innerHTML = whiteCount + blackCount + hispanicCount +
+  				asianCount;
 
   		};
   		counted();
 
-		filter.charted = [chartWhite, chartBlack, chartHispanic];
+		filter.charted = [chartWhite, chartBlack, chartHispanic, chartAsian];
 
         function drawChart() {
 
