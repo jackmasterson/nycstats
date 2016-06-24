@@ -1,6 +1,37 @@
+* {
+	text-align: center;
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #ddd;
+}
+
+div {
+	left: 15px;
+}
+
+.search-param-div {
+	text-align: right;
+	width: 60vw;
+}
+
+.first {
+	height: 100vh;
+	overflow-y: scroll;
+}
+
+.label {
+	text-align: left;
+}
+
 .chart {
 	display: inline-block;
-	width: 45vw;
+	width: 35vw;
+	background-color: white;
+	margin: 3vh;
 }
 
 .male {
@@ -9,4 +40,28 @@
 
 .female {
 	border: 2px solid pink;
+}
+
+.shade {
+	position: absolute;
+	z-index: 5;
+	background-color: rgba(0,0,0,0.5);
+	height: 200vh;
+	width: 100vw;
+	left: 0;
+	padding: 0;
+}
+
+.header {
+	padding-top: 5vh;
+}
+
+.background {
+	background: url(..//img/chart.jpg) no-repeat;
+	background-size: cover;
+	height: 200vh;
+	width: 100vw;
+	padding: 0;
+	color: white;
+	left: 0;
 }
