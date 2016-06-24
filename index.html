@@ -7,12 +7,21 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<h1>Show Change over Time (2007-2010)</h1>
+	<div class="line-div">
+		<select class="year-search" name="Year">
+			<option class="year" value="2007">2007</option>
+			<option class="year" value="2008">2008</option>
+			<option class="year" value="2009">2009</option>
+			<option class="year" value="2010">2010</option>
+			<option class="year" value="2011">2011</option>
+		</select>
+	</div>
 	<h1>Top Causes of Death in New York City</h1>
 	<div class="search-param-div">
 		<select class="gender-filter" name="Gender">
 			<option class="male" value="male">Male</option>
 			<option class="female" value="female">Female</option>
-			<option class="compare" value="compare">Compare Genders</option>
 		</select>
 
 		<select class="cause-filter" name="Cause">
@@ -20,12 +29,10 @@
 			<option class="cause-opt" value="DISEASES OF HEART">Diseases of the Heart</option>
 			<option class="cause-opt" value="MALIGNANT NEOPLASMS">Malignant Neoplasms</option>
 		</select>
-		<select class="chart-filter" name="Chart">
-			<option class="chart-opt" value="PieChart">Pie Chart</option>
-			<option class="chart-opt" value="BarChart">Bar Chart</option>
-		</select>
-		<button data-bind="click: filter.init" class="search-gender">Search!</button>
+
+		<button data-bind="click: ajax.init" class="search-gender">Search!</button>
 	</div>
+	<div class="first"></div>
 
 
 	<script src="js/lib/knockout-3.2.0.js"></script>

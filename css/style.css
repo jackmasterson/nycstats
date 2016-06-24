@@ -2,3 +2,11 @@
 	display: inline-block;
 	width: 45vw;
 }
+
+.male {
+	border: 2px solid blue;
+}
+
+.female {
+	border: 2px solid pink;
+}
