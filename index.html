@@ -10,20 +10,19 @@
 <div class="background">
 	<div class="shade">
 	<h1 class="header">Top Causes of Death in New York City</h1>
+	<h2 class="sub-header">Data provided by Socrata Open Data Network, Charts by Google</h2>
 	<div class="search-param-div">
 		<span>Gender</span>
 		<select class="gender-filter" name="Gender">
 			<option class="male" value="male">Male</option>
 			<option class="female" value="female">Female</option>
 		</select>
-		<br>
 		<span>Cause of Death</span>
 		<select class="cause-filter" name="Cause">
 			<option class="cause-opt" value="INFLUENZA AND PNEUMONIA">Flu/Pneumonia</option>
 			<option class="cause-opt" value="DISEASES OF HEART">Diseases of the Heart</option>
 			<option class="cause-opt" value="MALIGNANT NEOPLASMS">Malignant Neoplasms</option>
 		</select>
-		<br>
 		<span>Year</span>
 		<select class="year-search" name="Year">
 			<option class="year" value="2007">2007</option>
@@ -32,7 +31,6 @@
 			<option class="year" value="2010">2010</option>
 			<option class="year" value="2011">2011</option>
 		</select>
-		<br>
 		<button data-bind="click: ajax.init" class="search-gender">Search!</button>
 	</div>
 	<div class="first"></div>

@@ -44,7 +44,7 @@ var ajax = {
 			dataType: "json"
 		})
 		.done(function(data){
-
+			//console.log(data);
 			model.firstDataInfo().push(data);
 
 			//firstData.init();
