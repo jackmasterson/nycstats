@@ -227,15 +227,20 @@ var filter = {
 	male: function() {
 
 		filter.genArr = [];
-
+//console.log(filter.genArr);
+//		console.log(model);
+	//	console.log(model.causeDataInfo());
 		this.info.forEach(function(data){
 			filter.sex = data.sex;
 			if(filter.sex === "MALE"){
 
 				filter.genArr.push(data);
-					var cause = data.cause_of_death;
-					console.log(cause);
-					model.causeDataInfo.push(cause);
+				var cause = data.cause_of_death;
+				console.log(cause);
+				console.log('hey');
+		//		console.log(model.causeDataInfo())
+				model.causeDataInfo.push(cause);
+			//	model.causeDataInfo().push(cause);
 			}
 		
 		});
@@ -253,6 +258,7 @@ var filter = {
 				filter.genArr.push(data);			
 				var cause = data.cause_of_death;
 				//console.log(cause);
+
 				model.causeDataInfo.push(cause);
 			}
 		});
@@ -261,16 +267,17 @@ var filter = {
 
 	chartDisease: function() {
 	//	console.log(filter.genArr);
+	//console.log('yup');
 		filter.using = [];
 		filter.genArr.forEach(function(data){
 
 
 			toggle.causeButton();
-var cause = data.cause_of_death;
-			if(cause === filter.causeVal){
+			var cause = data.cause_of_death;
+		//	if(cause === filter.causeVal){
 	
 				filter.using.push(data);
-			}
+		//	}
 		});
 		filter.chartData();
 	},
