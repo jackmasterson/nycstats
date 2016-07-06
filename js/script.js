@@ -215,6 +215,8 @@ var filter = {
 	      	//}
       		pieChart.draw(data, options);
       		barChart.draw(data, options);
+      		console.log(data);
+      		console.log(options);
       };
 	}
 };
