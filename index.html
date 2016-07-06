@@ -9,29 +9,27 @@
 <body>
 <div class="background">
 	<div class="shade">
-	<h1 class="header">NYC Opioid Hospital Visits, 2010-2015</h1>
-	<h2 class="sub-header">Data provided by Socrata Open Data Network, Charts by Google</h2>
-	<div class="search-param-div">
-		<span>Payer</span>
-		<select class="payer-filter" name="Payer">
-			<option class="payer-opt" value="Medicare">Medicare</option>
-			<option class="payer-opt" value="Medicaid">Medicaid</option>
-			<option class="payer-opt" value="Commercial">Commercial</option>
-		</select>
-		<button data-bind="click: ajax.init" class="search-gender">Search!</button>
+		<h1 class="header">NYC Opioid Hospital Visits, 2010-2015</h1>
+		<div class="search-param-div">
+			<span>Payer</span>
+			<select class="payer-filter" name="Payer">
+				<option class="payer-opt" value="Medicare">Medicare</option>
+				<option class="payer-opt" value="Medicaid">Medicaid</option>
+				<option class="payer-opt" value="Commercial">Commercial</option>
+			</select>
+			<button data-bind="click: ajax.init" class="search-gender">Search!</button>
+		</div>
+		<div class="first"></div>
 	</div>
-	<div class="first"></div>
-	</div>
+	<h4 class="sub-header">Data provided by Socrata Open Data Network, Charts by Google</h4>
 </div>
 
 
-	<script src="js/lib/knockout-3.2.0.js"></script>
-	<script type="text/javascript" src="https://www.google.com/jsapi">
-	</script>
-   
-	<script src="js/lib/jquery.js"></script>
-	<script src="js/script.js"></script>
+<script src="js/lib/knockout-3.2.0.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi">
+</script>
+<script src="js/lib/jquery.js"></script>
+<script src="js/script.js"></script>
 
-   
 </body>
 </html>

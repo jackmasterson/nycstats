@@ -86,6 +86,7 @@ var filter = {
 		filter.fifteenArr = [];
 
 		filter.genArr.forEach(function(more){
+			console.log(more);
 			var year = more.year;
 			var ten = year === "2010";
 			var eleven = year === "2011";
