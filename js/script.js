@@ -1,6 +1,7 @@
 var model = {
 	firstDataInfo: ko.observableArray(),
-	lastDataInfo: ko.observableArray()
+	lastDataInfo: ko.observableArray(),
+	causeDataInfo: ko.observableArray()
 };
 
 
@@ -9,11 +10,6 @@ var model = {
 
 var viewModel = {
 	init: function() {
-	//	ajax.init();
-	//	using.init();
-	//	charted.init();
-	//	filter.init();
-	//filter.chartIt();
 
 	}
 }
@@ -25,20 +21,12 @@ var ajaxOp = {
 		if(model.firstDataInfo()[0] !== undefined){
 			model.firstDataInfo.removeAll();
 		}
-		//ajax.yearSearch = document.getElementsByClassName('year-search')[0];
-		//ajax.yearVal = yearSearch.value;
-		//console.log(ajax.yearVal);
-	//	console.log(yearSearch.value);
-		//ajax.yearVal = ajax.yearSearch.value;
-		//ajax.url = "https://health.data.ny.gov/resource/9p95-5ez3.json?patient_county_name=Duchess";
 		ajaxOp.render();
 	},
 
 	render: function() {
 
 		var that = this;
-	//	console.log(ajax.url);
-	//	console.log(ajax.url);
 		$.ajax({
 			url: "https://health.data.ny.gov/resource/9p95-5ez3.json?patient_county_code=60",
 			dataType: "json"
@@ -65,7 +53,7 @@ var filterInfo = {
 
 		filterInfo.info.forEach(function(data){
 		//	console.log(data);
-			console.log(data.payer, data.overall_opioid, data.year);
+		//	console.log(data.payer, data.overall_opioid, data.year);
 			var both = filterInfo.payerVal === data.payer;
 			if(both){
 				filterInfo.genArr.push(data);
@@ -86,7 +74,7 @@ var filterInfo = {
 		filterInfo.fifteenArr = [];
 
 		filterInfo.genArr.forEach(function(more){
-			console.log(more);
+		//	console.log(more);
 			var year = more.year;
 			var ten = year === "2010";
 			var eleven = year === "2011";
@@ -145,15 +133,7 @@ var filterInfo = {
   		$('.op-first').prepend(barEl);
   		
   		var counter = document.getElementsByClassName('count-span')[0];
-  	//	console.log(counter);
 
-  	/*	function counted() {
-
-  			counter.innerHTML = whiteCount + blackCount + hispanicCount +
-  				asianCount;
-
-  		};
-  		counted();*/
 
 		filterInfo.charted = [ten, eleven, twelve, thirteen, fourteen, fifteen];
 
@@ -198,9 +178,7 @@ var ajaxCause = {
 			model.firstDataInfo.removeAll();
 		}
 		ajaxCause.yearSearch = document.getElementsByClassName('year-search')[0];
-		//ajax.yearVal = yearSearch.value;
-		//console.log(ajax.yearVal);
-	//	console.log(yearSearch.value);
+
 		ajaxCause.yearVal = ajaxCause.yearSearch.value;
 		ajaxCause.url = "https://data.cityofnewyork.us/resource/uvxr-2jwn.json?year="+ajaxCause.yearVal;
 		ajaxCause.render();
@@ -209,18 +187,14 @@ var ajaxCause = {
 	render: function() {
 
 		var that = this;
-	//	console.log(ajax.url);
-	//	console.log(ajax.url);
 		$.ajax({
 			url: ajaxCause.url,
 			dataType: "json"
 		})
 		.done(function(data){
-			//console.log(data);
+		//	console.log(data);
 			model.firstDataInfo().push(data);
 
-			//firstData.init();
-			//filter.init();
 			filter.init();
 		});
 
@@ -259,6 +233,9 @@ var filter = {
 			if(filter.sex === "MALE"){
 
 				filter.genArr.push(data);
+					var cause = data.cause_of_death;
+					console.log(cause);
+					model.causeDataInfo.push(cause);
 			}
 		
 		});
@@ -273,19 +250,23 @@ var filter = {
 			filter.sex = data.sex;
 			if(filter.sex === "FEMALE"){
 
-				filter.genArr.push(data);
+				filter.genArr.push(data);			
+				var cause = data.cause_of_death;
+				//console.log(cause);
+				model.causeDataInfo.push(cause);
 			}
 		});
 		filter.chartDisease();
 	},
 
 	chartDisease: function() {
-
+	//	console.log(filter.genArr);
 		filter.using = [];
 		filter.genArr.forEach(function(data){
 
-			var cause = data.cause_of_death;
 
+			toggle.causeButton();
+var cause = data.cause_of_death;
 			if(cause === filter.causeVal){
 	
 				filter.using.push(data);
@@ -391,8 +372,8 @@ var filter = {
 
       		pieChart.draw(data, options);
       		barChart.draw(data, options);
-      		console.log(data);
-      		console.log(options);
+      //		console.log(data);
+      	//	console.log(options);
       };
 	}
 };
@@ -428,6 +409,11 @@ var toggle = {
 		$('.background').fadeOut(function(){
 			$('.landing').fadeIn();
 		});
+	},
+
+	causeButton: function() {
+
+		$('.cause-filter').show();
 	}
 }
 

@@ -52,6 +52,10 @@ select {
 	left: 5px;
 }
 
+.hidden-cause {
+	display: none;
+}
+
 .count-div {
 	margin-bottom: 5vh;
 }
