@@ -190,6 +190,24 @@ var clear = {
 	}
 }
 
+var toggle = {
+
+	opInfo: function() {
+
+		$('.landing').fadeOut(function(){
+			$('.op-charts').fadeIn();
+		});
+		
+	},
+
+	causeInfo: function() {
+
+		$('.landing').fadeOut(function(){
+			$('.cause-charts').fadeIn();
+		});
+	}
+}
+
 
 
 ko.applyBindings(viewModel.init());

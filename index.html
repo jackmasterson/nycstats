@@ -7,7 +7,24 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="background">
+<div class="landing">
+	<div class="shade">
+		<h1 class="landing-head">Which do you want to see?</h1>
+		<div class="landing-subhead">
+			<h3>
+				<a class="landing-href" href="#/" data-bind="click: toggle.opInfo">NYC Opioid Hospital Visits Based on Payer, 2010-2015</a>
+			</h3>
+			<img class="landing-img" src="img/hospital.png">
+		</div>
+		<div class="landing-subhead">
+			<h3>
+				<a class="landing-href" href="#/" data-bind="click: toggle.causeInfo">Top Causes of Death in NYC Broken Down by Ethnicity, 2007-2011</a>
+			</h3>
+			<img class="landing-img" src="img/NYC.png">
+		</div>
+	</div>
+</div>
+<div class="background op-charts">
 	<div class="shade">
 		<h1 class="header">NYC Opioid Hospital Visits, 2010-2015</h1>
 		<div class="search-param-div">
@@ -16,6 +33,35 @@
 				<option class="payer-opt" value="Medicare">Medicare</option>
 				<option class="payer-opt" value="Medicaid">Medicaid</option>
 				<option class="payer-opt" value="Commercial">Commercial</option>
+			</select>
+			<button data-bind="click: ajax.init" class="search-gender">Search!</button>
+		</div>
+		<div class="first"></div>
+	</div>
+	<h4 class="sub-header">Data provided by Socrata Open Data Network, Charts by Google</h4>
+</div>
+<div class="background cause-charts">
+	<div class="shade">
+		<h1 class="header">Top Causes of Death in New York City</h1>
+		<div class="search-param-div">
+			<span>Gender</span>
+			<select class="gender-filter" name="Gender">
+				<option class="male" value="male">Male</option>
+				<option class="female" value="female">Female</option>
+			</select>
+			<span>Cause of Death</span>
+			<select class="cause-filter" name="Cause">
+				<option class="cause-opt" value="INFLUENZA AND PNEUMONIA">Flu/Pneumonia</option>
+				<option class="cause-opt" value="DISEASES OF HEART">Diseases of the Heart</option>
+				<option class="cause-opt" value="MALIGNANT NEOPLASMS">Malignant Neoplasms</option>
+			</select>
+			<span>Year</span>
+			<select class="year-search" name="Year">
+				<option class="year" value="2007">2007</option>
+				<option class="year" value="2008">2008</option>
+				<option class="year" value="2009">2009</option>
+				<option class="year" value="2010">2010</option>
+				<option class="year" value="2011">2011</option>
 			</select>
 			<button data-bind="click: ajax.init" class="search-gender">Search!</button>
 		</div>
