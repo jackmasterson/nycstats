@@ -421,6 +421,13 @@ var toggle = {
 		$('.landing').fadeOut(function(){
 			$('.cause-charts').fadeIn();
 		});
+	},
+
+	back: function() {
+
+		$('.background').fadeOut(function(){
+			$('.landing').fadeIn();
+		});
 	}
 }
 
