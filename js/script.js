@@ -140,9 +140,9 @@ var filterInfo = {
 		var pieEl = "<div class='chart "+filterInfo.genVal+"' id='"+pieId+"'></div>";
 		//	console.log(barEl);
 		//$('.first').prepend(countEl);
-  		$('.first').prepend(pieEl);
+  		$('.op-first').prepend(pieEl);
   		//console.log(document.getElementsByClassName('first')[0]);
-  		$('.first').prepend(barEl);
+  		$('.op-first').prepend(barEl);
   		
   		var counter = document.getElementsByClassName('count-span')[0];
   	//	console.log(counter);
@@ -347,10 +347,10 @@ var filter = {
 		var pieEl = "<div class='chart "+filter.genVal+"' id='"+pieId+"'></div>";
 		var countEl = "<div class='count-div'>Total Number of Deaths: <span class='count-span'></span></div>";
 	//	console.log(barEl);
-		$('.first').prepend(countEl);
-  		$('.first').prepend(pieEl);
+		$('.cause-first').prepend(countEl);
+  		$('.cause-first').prepend(pieEl);
   		//console.log(document.getElementsByClassName('first')[0]);
-  		$('.first').prepend(barEl);
+  		$('.cause-first').prepend(barEl);
   		
   		var counter = document.getElementsByClassName('count-span')[0];
   		//console.log(counter);
