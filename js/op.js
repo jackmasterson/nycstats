@@ -1,7 +1,8 @@
 var model = {
 	firstDataInfo: ko.observableArray(),
 	lastDataInfo: ko.observableArray(),
-	causeDataInfo: ko.observableArray()
+	causeDataInfo: ko.observableArray(),
+	selectedCause: ko.observable()
 };
 
 var viewModel = {
@@ -199,12 +200,6 @@ var toggle = {
 		$('.background').fadeOut(function(){
 			$('.landing').fadeIn();
 		});
-	},
-
-	causeButton: function() {
-
-	
-		
 	},
 
 	getChart: function() {

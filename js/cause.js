@@ -59,8 +59,8 @@ var filter = {
 
 				filter.genArr.push(data);
 				var cause = data.cause_of_death;
-				console.log(cause);
-				console.log('hey');
+		//		console.log(cause);
+		//		console.log('hey');
 				model.causeDataInfo.push(cause);
 			}
 		
@@ -87,12 +87,27 @@ var filter = {
 	},
 
 	chartDisease: function() {
-		
+	//	filter.val = ko.observableArray();
+	//	filter.causeData = ko.observableArray();
+
+	/*	$(filter.causeFilt).children('option').each(function(){
+			var val = this.value;
+			filter.val().push(val);
+
+		});*/
+	//	filter.children = $(filter.causeFilt).children();
+	//	console.log(filter.children[0].value);
+
+		model.causeDataInfo().forEach(function(info){
+			console.log(info);
+			console.log(model.selectedCause());
+		});
+
+
 		filter.using = [];
 		filter.genArr.forEach(function(data){
+		//	console.log(data);
 
-
-			toggle.causeButton();
 			var cause = data.cause_of_death;
 				filter.using.push(data);
 		});
