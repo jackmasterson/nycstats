@@ -54,6 +54,7 @@ select {
 
 .hidden-cause {
 	display: none;
+	margin: 25px;
 }
 
 .count-div {

@@ -55,10 +55,6 @@
 				<option class="male" value="male">Male</option>
 				<option class="female" value="female">Female</option>
 			</select>
-			<span class="hidden-cause">Cause of Death</span>
-
-			<select class="hidden-cause cause-filter" data-bind="options: model.causeDataInfo">
-			</select>
 			<span>Year</span>
 			<select class="year-search" name="Year">
 				<option class="year" value="2007">2007</option>
@@ -67,7 +63,12 @@
 				<option class="year" value="2010">2010</option>
 				<option class="year" value="2011">2011</option>
 			</select>
-			<button data-bind="click: ajaxCause.init" class="search-gender">Search!</button>
+			<button data-bind="click: ajaxCause.init" class="search-gender">Search Causes</button>
+			<br>
+			<span class="hidden-cause">Cause of Death</span>
+			<select class="hidden-cause cause-filter" data-bind="options: model.causeDataInfo">
+			</select>
+			<button data-bind="click: toggle.getChart" class="hidden-cause">Generate Graphs</button>
 		</div>
 		<div class="cause-first"></div>
 		<div class="back-to-landing">
@@ -86,7 +87,9 @@
 <script type="text/javascript" src="https://www.google.com/jsapi">
 </script>
 <script src="js/lib/jquery.js"></script>
-<script src="js/script.js"></script>
+<script src="js/cause.js"></script>
+<script src="js/op.js"></script>
+
 
 </body>
 </html>
