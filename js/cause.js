@@ -65,7 +65,7 @@ var filter = {
 			}
 		
 		});
-		filter.chartDisease();
+		$('.hidden-cause').show();
 	},
 
 	female: function() {
@@ -82,10 +82,12 @@ var filter = {
 				model.causeDataInfo.push(cause);
 			}
 		});
-		filter.chartDisease();
+		$('.hidden-cause').show();
+		
 	},
 
 	chartDisease: function() {
+		
 		filter.using = [];
 		filter.genArr.forEach(function(data){
 

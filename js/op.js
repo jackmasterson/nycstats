@@ -204,7 +204,7 @@ var toggle = {
 	causeButton: function() {
 
 	
-		$('.hidden-cause').show();
+		
 	},
 
 	getChart: function() {
