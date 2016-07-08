@@ -97,20 +97,22 @@ var filter = {
 		});*/
 	//	filter.children = $(filter.causeFilt).children();
 	//	console.log(filter.children[0].value);
-
-		model.causeDataInfo().forEach(function(info){
-			console.log(info);
-			console.log(model.selectedCause());
-		});
-
-
 		filter.using = [];
-		filter.genArr.forEach(function(data){
-		//	console.log(data);
+		model.firstDataInfo().forEach(function(info){
 
-			var cause = data.cause_of_death;
-				filter.using.push(data);
+			info.forEach(function(data){
+
+				var cause = data.cause_of_death;
+				if(cause === model.selectedCause()){
+					filter.using.push(data);
+				}
+			})
+		//	console.log(model.selectedCause());
+		//	if(info === model.selectedCause()){
+		//		filter.using.push(info);
+		//	}
 		});
+
 		filter.chartData();
 	},
 
@@ -160,8 +162,8 @@ var filter = {
 			hispanicCount];
 		var chartAsian = [filter.chartAsian[0].ethnicity, asianCount];
 
-  		var barId = filter.causeVal+"_chart_"+filter.genVal+"_bar";
-  		var pieId = filter.causeVal+"_chart_"+filter.genVal+"_pie";
+  		var barId = model.selectedCause()+"_chart_"+filter.genVal+"_bar";
+  		var pieId = model.selectedCause()+"_chart_"+filter.genVal+"_pie";
   		var barEl = "<div class='chart "+filter.genVal+"' id='"+barId+"'></div>";
 		var pieEl = "<div class='chart "+filter.genVal+"' id='"+pieId+"'></div>";
 		var countEl = "<div class='count-div'>Total Number of Deaths: "+
@@ -188,14 +190,14 @@ var filter = {
       		data.addColumn("number", "Number of Deaths", "number");
       		data.addRows(filter.charted);
 
-      		var options = {"title": ajaxCause.yearVal+" "+filter.causeVal+" Deaths in NYC, "+filter.gender.value,
+      		var options = {"title": ajaxCause.yearVal+" "+model.selectedCause()+" Deaths in NYC, "+filter.gender.value,
       					   "width": 300,
       					   "height": 300};
 
-      		var pie = document.getElementById(filter.causeVal+
+      		var pie = document.getElementById(model.selectedCause()+
       			'_chart_'+filter.genVal+'_pie');
 
-      		var bar = document.getElementById(filter.causeVal+
+      		var bar = document.getElementById(model.selectedCause()+
       			'_chart_'+filter.genVal+'_bar');
       		var pieChart = new google.visualization.PieChart(pie);
       		var barChart = new google.visualization.BarChart(bar);
