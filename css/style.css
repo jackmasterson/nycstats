@@ -66,6 +66,11 @@ select {
 	overflow-y: scroll;
 }
 
+.cause-first {
+	height: 100vh;
+	overflow-y: scroll;
+}
+
 .label {
 	text-align: left;
 }
