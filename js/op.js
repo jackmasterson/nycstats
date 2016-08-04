@@ -37,7 +37,7 @@ var ajaxOp = {
 		$('.search-gender').hide();
 		if(model.firstDataInfo()[0] !== undefined){
 			model.firstDataInfo.removeAll();
-			console.log(model.firstDataInfo());
+		//	console.log(model.firstDataInfo());
 		}
 		ajaxOp.render();
 	},
@@ -57,11 +57,19 @@ var ajaxOp = {
 
 	}
 }
-var tryIt = -1;
-$('.update').click(function() {
+var newSearch = -1;
+/*$('.update').click(function() {
 	ajaxOp.init();
 
-});
+});*/
+
+function startMeUp() {
+	ajaxOp.init();
+	setTimeout(startMeUp, 2000);
+};
+
+startMeUp();
+
 
 var filterInfo = {
 	
@@ -74,14 +82,14 @@ var filterInfo = {
 			
 				//for(var t = 0; t < len; t++){
 				//	console.log(payered[t]);
-				if(tryIt === 2){
-					tryIt = -1;
+				if(newSearch === 2){
+					newSearch = -1;
 				}
-				if(tryIt < 2){
-					tryIt = tryIt + 1;
+				if(newSearch < 2){
+					newSearch = newSearch + 1;
 					
-					filterInfo.payerVal = payered[tryIt];
-					console.log(filterInfo.payerVal);
+					filterInfo.payerVal = payered[newSearch];
+			
 					
 				}
 
@@ -93,7 +101,7 @@ var filterInfo = {
 
 	//	filterInfo.payer = document.getElementsByClassName('payer-filter')[0];
 	//	filterInfo.payerVal = filterInfo.payer.value;
-		console.log(filterInfo.payerVal);
+	//	console.log(filterInfo.payerVal);
 		model.head(filterInfo.payerVal);
 	//	var head = '<h1>'+filterInfo.payerVal+'</h1>';
 
@@ -105,7 +113,7 @@ var filterInfo = {
 			var both = filterInfo.payerVal === data.payer;
 			if(both){
 				filterInfo.genArr.push(data);
-				console.log(data);
+			//	console.log(data);
 			}
 		});
 
@@ -135,7 +143,7 @@ var filterInfo = {
 			
 			if(ten){
 				filterInfo.tenArr.push(more);
-				console.log(more);
+			//	console.log(more);
 				model.dataset.push(more);
 			}
 			if(eleven){
@@ -177,13 +185,13 @@ var filterInfo = {
 
 
 		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
-		console.log(Math.max.apply(null, all));
+	//	console.log(Math.max.apply(null, all));
 		var highest = Math.max.apply(null, all);
 		
 
 		var barPadding = 1; 
 		var transition = d3.transition();
-		console.log(all);
+	//	console.log(all);
 		//create SVG element
 
 
@@ -218,7 +226,7 @@ var filterInfo = {
     				return 'red'
     			}
     		})
-    		.duration(650)
+    		.duration(1650)
 
 
 		svg.selectAll('text')
@@ -247,8 +255,7 @@ var filterInfo = {
 					return '9px'
 				}
 			})
-			.delay(1000)
-			.duration(650)
+			.duration(1650)
 
 
 
@@ -291,8 +298,7 @@ var filterInfo = {
 							return '9px'
 						}
 					})
-					.delay(1000)
-					.duration(650)
+					.duration(1650)
 			//		});
 
 
@@ -335,7 +341,7 @@ var toggle = {
 	},
 
 	getChart: function() {
-		console.log("inch by inch");
+		//console.log("inch by inch");
 	}
 };
 
