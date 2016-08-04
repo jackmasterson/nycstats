@@ -102,7 +102,7 @@ select {
 .shade {
 	position: absolute;
 	z-index: 5;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.2);
 	height: 150vh;
 	width: 100vw;
 	left: 0;
