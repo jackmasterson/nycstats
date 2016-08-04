@@ -124,6 +124,10 @@ select {
 	left: 0;
 }
 
+.head {
+	padding-top: 25px;
+}
+
 .op-charts {
 	display: block;
 }

@@ -219,14 +219,7 @@ var filterInfo = {
 				return "rgb(0,0, " + (d) + ")";
 			})
 
-		svg.selectAll('rect')
-			.transition()
-    		.style('fill', function(d){
-    			if(d > highest - 1){
-    				return 'red'
-    			}
-    		})
-    		.duration(1650)
+
 
 
 		svg.selectAll('text')
@@ -245,17 +238,7 @@ var filterInfo = {
 			.attr('fill', 'white')
 			.attr('font-family', 'sans-serif')
 			.attr('font-size', '11px')
-			.attr('text-anchor', 'middle')
-			.transition()
-			.style('font-size', function(d){
-				if(d > highest -1 ){
-					return '15px'
-				}
-				else {
-					return '9px'
-				}
-			})
-			.duration(1650)
+			.attr('text-anchor', 'middle');
 
 
 
@@ -274,8 +257,16 @@ var filterInfo = {
 					})
 					.attr('fill', function(d){
 						return "rgb(0,0, " + (d) + ")";
-					})
-				svg.selectAll('text')		
+					})    		
+					.style('fill', function(d){
+		    			if(d > highest - 1){
+		    				return 'red'
+		    			}
+		    		})
+    				.duration(650);
+				
+				svg.selectAll('text')
+					.transition()		
 					.text(function(d){
 						return d;
 					})
@@ -289,16 +280,9 @@ var filterInfo = {
 					.attr('font-family', 'sans-serif')
 					.attr('font-size', '11px')
 					.attr('text-anchor', 'middle')
-					.transition()
-					.style('font-size', function(d){
-						if(d > highest -1 ){
-							return '15px'
-						}
-						else {
-							return '9px'
-						}
-					})
-					.duration(1650)
+					.duration(650);
+
+
 			//		});
 
 
