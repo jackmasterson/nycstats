@@ -5,7 +5,8 @@ var model = {
 	selectedCause: ko.observable(),
 	dataset: [],
 	dataexp: ko.observableArray(),
-	head: ko.observableArray('')
+	head: ko.observableArray(''),
+	newSearch: -1
 };
 
 var viewModel = {
@@ -29,6 +30,10 @@ var viewModel = {
 			
 		});
 		ajaxOp.init();
+		function startMeUp() {
+			filterInfo.init();
+			setTimeout(startMeUp, 2000);
+		};
 		setTimeout(startMeUp, 1500);
 	}
 }
@@ -39,7 +44,6 @@ var ajaxOp = {
 		$('.search-gender').hide();
 		if(model.firstDataInfo()[0] !== undefined){
 			model.firstDataInfo.removeAll();
-		//	console.log(model.firstDataInfo());
 		}
 		ajaxOp.render();
 	},
@@ -59,58 +63,33 @@ var ajaxOp = {
 
 	}
 }
-var newSearch = -1;
-/*$('.update').click(function() {
-	ajaxOp.init();
-
-});*/
-
-
-
 
 var filterInfo = {
 	
 	init: function() {
 		var that = this;
-		
-		//	console.log(filterInfo.payerVal);
-			var payered = ['Medicare', 'Medicaid', 'Commercial'];
-			var len = payered.length;
+		var payered = ['Medicare', 'Medicaid', 'Commercial'];
+		var len = payered.length;
 			
-				//for(var t = 0; t < len; t++){
-				//	console.log(payered[t]);
-				if(newSearch === 2){
-					newSearch = -1;
-				}
-				if(newSearch < 2){
-					newSearch = newSearch + 1;
-					
-					filterInfo.payerVal = payered[newSearch];
-			
-					
-				}
+		if(model.newSearch === 2){
+			model.newSearch = -1;
+		}
 
-					
-				//}
-	
+		if(model.newSearch < 2){
+			model.newSearch = model.newSearch + 1;	
+			filterInfo.payerVal = payered[model.newSearch];	
+		}
+
 		filterInfo.info = model.firstDataInfo()[0];
 		filterInfo.genArr = [];
 
-	//	filterInfo.payer = document.getElementsByClassName('payer-filter')[0];
-	//	filterInfo.payerVal = filterInfo.payer.value;
-	//	console.log(filterInfo.payerVal);
 		model.head(filterInfo.payerVal);
-	//	var head = '<h1>'+filterInfo.payerVal+'</h1>';
-
 
 		filterInfo.info.forEach(function(data){
-			//console.log(data);
-		//	console.log(data);
-		//	console.log(data.payer, data.overall_opioid, data.year);
+			
 			var both = filterInfo.payerVal === data.payer;
 			if(both){
 				filterInfo.genArr.push(data);
-			//	console.log(data);
 			}
 		});
 
@@ -128,7 +107,6 @@ var filterInfo = {
 		filterInfo.fifteenArr = [];
 
 		filterInfo.genArr.forEach(function(more){
-		//	console.log(more);
 			
 			var year = more.year;
 			var ten = year === "2010";
@@ -140,59 +118,40 @@ var filterInfo = {
 			
 			if(ten){
 				filterInfo.tenArr.push(more);
-			//	console.log(more);
-				model.dataset.push(more);
 			}
 			if(eleven){
 				filterInfo.elevenArr.push(more);
-				model.dataset.push(more);
-			//	model.dataset.pu
 			}
 			if(twelve){
 				filterInfo.twelveArr.push(more);
-				model.dataset.push(more);
 			}
 			if(thirteen){
 				filterInfo.thirteenArr.push(more);
-				model.dataset.push(more);
 			}
 			if(fourteen){
 				filterInfo.fourteenArr.push(more);
 			}
 			if(fifteen){
 				filterInfo.fifteenArr.push(more);
-				model.dataset.push(more);
 			}
 		});
 		filterInfo.chartIt();
 
 	},
 
-	chartIt: function() {
-	//	google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawChart});
-      	
-		var ten = //[filterInfo.tenArr[0].year,
-			parseInt(filterInfo.tenArr[0].overall_opioid);//];
-
+	chartIt: function() {    	
+		var ten = parseInt(filterInfo.tenArr[0].overall_opioid);
 		var eleven = parseInt(filterInfo.elevenArr[0].overall_opioid);
 		var twelve = parseInt(filterInfo.twelveArr[0].overall_opioid);
 		var thirteen = parseInt(filterInfo.thirteenArr[0].overall_opioid);
 		var fourteen = parseInt(filterInfo.fourteenArr[0].overall_opioid);
 		var fifteen = parseInt(filterInfo.fifteenArr[0].overall_opioid);
 
-
 		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
-	//	console.log(Math.max.apply(null, all));
-		var highest = Math.max.apply(null, all);
 		
-
+		var highest = Math.max.apply(null, all);
 		var barPadding = 1; 
 		var transition = d3.transition();
-	//	console.log(all);
-		//create SVG element
-
-
-		var update = d3.select('svg').transition();
 
 		var w = 500;
 		var h = 500;
@@ -216,9 +175,6 @@ var filterInfo = {
 				return "rgb(0,0, " + (d) + ")";
 			})
 
-
-
-
 		svg.selectAll('text')
 			.data(all)
 			.enter()
@@ -237,104 +193,43 @@ var filterInfo = {
 			.attr('font-size', '11px')
 			.attr('text-anchor', 'middle');
 
-
-
-		//	$('.update').click(function(){
-				svg.selectAll('rect')
-					.transition()
-					.attr('x', function(d, i){
-						return i * (w/all.length);
-					})
-					.attr('y', function(d){
-						return h - d; //height minus data value
-					})
-					.attr('width', w/all.length- barPadding)
-					.attr('height', function(d){
-						return d;
-					})
-					.attr('fill', function(d){
-						return "rgb(0,0, " + (d) + ")";
-					})    		
-					.style('fill', function(d){
-		    			if(d > highest - 1){
-		    				return 'red'
-		    			}
-		    		})
-    				.duration(650);
-				
-				svg.selectAll('text')
-					.transition()		
-					.text(function(d){
-						return d;
-					})
-					.attr('x', function(d, i){
-						return i * (w/all.length) + 40;
-					})
-					.attr('y', function(d){
-						return h - d + 30;
-					})
-					.attr('fill', 'white')
-					.attr('font-family', 'sans-serif')
-					.attr('font-size', '11px')
-					.attr('text-anchor', 'middle')
-					.duration(650);
-
-
-			//		});
-
-
+			svg.selectAll('rect')
+				.transition()
+				.attr('x', function(d, i){
+					return i * (w/all.length);
+				})
+				.attr('y', function(d){
+					return h - d; //height minus data value
+				})
+				.attr('width', w/all.length- barPadding)
+				.attr('height', function(d){
+					return d;
+				})
+				.attr('fill', function(d){
+					return "rgb(0,0, " + (d) + ")";
+				})    		
+				.style('fill', function(d){
+	    			if(d > highest - 1){
+	    				return 'red'
+	    			}
+	    		})
+				.duration(650);
+			
+			svg.selectAll('text')
+				.transition()		
+				.text(function(d){
+					return d;
+				})
+				.attr('x', function(d, i){
+					return i * (w/all.length) + 40;
+				})
+				.attr('y', function(d){
+					return h - d + 30;
+				})
+				.duration(650);
 
 		}
 	};
-
-var clear = {
-
-	init: function() {
-
-	}
-};
-
-
-function startMeUp() {
-	//ajaxOp.init();
-	filterInfo.init();
-	setTimeout(startMeUp, 2000);
-};
-
-
-
-var toggle = {
-
-	opInfo: function() {
-
-		$('.landing').fadeOut(function(){
-			$('.op-charts').fadeIn();
-		});
-		
-	},
-
-	causeInfo: function() {
-
-		$('.landing').fadeOut(function(){
-			$('.cause-charts').fadeIn();
-		});
-	},
-
-	back: function() {
-
-		$('.background').fadeOut(function(){
-			$('.landing').fadeIn();
-		});
-	},
-
-	getChart: function() {
-		//console.log("inch by inch");
-	}
-};
-
-
-
-
 
 
 

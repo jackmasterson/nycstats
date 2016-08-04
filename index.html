@@ -7,66 +7,21 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="background op-charts">
-	<div class="shade">
-		<h1 class="header">NYC Opioid Hospital Visits by Payer, 2010-2015</h1>
-		<h3 class="head" data-bind="text: model.head"></h3>
-		<div class="op-first"></div>
-	</div>
-	<h4 class="sub-header">Data provided by Socrata Open Data Network</h4>
-</div>
-<div class="background cause-charts">
-	<div class="shade">
-		<h1 class="header">Top Causes of Death in New York City</h1>
-		<div class="search-param-div">
-			<span>Gender</span>
-			<select class="gender-filter" name="Gender">
-				<option class="male" value="male">Male</option>
-				<option class="female" value="female">Female</option>
-			</select>
-			<span>Year</span>
-			<select class="year-search" name="Year">
-				<option class="year" value="2007">2007</option>
-				<option class="year" value="2008">2008</option>
-				<option class="year" value="2009">2009</option>
-				<option class="year" value="2010">2010</option>
-				<option class="year" value="2011">2011</option>
-			</select>
-			<button data-bind="click: ajaxCause.init" class="search-gender">Search Causes</button>
-			<br>
-			<span class="hidden-cause">Cause of Death</span>
-			<select class="hidden-cause cause-filter" data-bind="options: model.causeDataInfo, value: model.selectedCause">
-			</select>
-			<button data-bind="click: filter.chartDisease" class="hidden-cause">Generate Graphs</button>
+
+	<div class="background op-charts">
+		<div class="shade">
+			<h1 class="header">NYC Opioid Hospital Visits by Payer, 2010-2015</h1>
+			<h3 class="head" data-bind="text: model.head"></h3>
+			<div class="op-first"></div>
 		</div>
-		<div class="cause-first"></div>
-		<div class="back-to-landing">
-			<h2 class="back-header sub-header">
-				<a class="landing-href" href="#/" data-bind="click: toggle.back">Back
-				</a>
-			</h2>
-		</div>
+		<h4 class="sub-header">Data provided by Socrata Open Data Network</h4>
 	</div>
-	<h4 class="sub-header">Data provided by Socrata Open Data Network, Charts by Google</h4>
-</div>
 
-
-
-<script src="js/lib/knockout-3.2.0.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi">
-</script>
-<script src="js/lib/jquery.js"></script>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="https://d3js.org/d3-color.v1.min.js"></script>
-<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
-<script src="https://d3js.org/d3-ease.v1.min.js"></script>
-<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
-<script src="https://d3js.org/d3-selection.v1.min.js"></script>
-<script src="https://d3js.org/d3-timer.v1.min.js"></script>
-<script src="https://d3js.org/d3-transition.v1.min.js"></script>
-<script src="js/cause.js"></script>
-<script src="js/op.js"></script>
-
-
+	<script src="js/lib/knockout-3.2.0.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi">
+	</script>
+	<script src="js/lib/jquery.js"></script>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="js/op.js"></script>
 </body>
 </html>
