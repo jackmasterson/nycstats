@@ -12,7 +12,7 @@ var ajaxCause = {
 			"uvxr-2jwn.json?year="+ajaxCause.yearVal;
 		ajaxCause.render();
 	},
-
+ 
 	render: function() {
 
 		var that = this;
@@ -59,8 +59,6 @@ var filter = {
 
 				filter.genArr.push(data);
 				var cause = data.cause_of_death;
-		//		console.log(cause);
-		//		console.log('hey');
 				model.causeDataInfo.push(cause);
 			}
 		

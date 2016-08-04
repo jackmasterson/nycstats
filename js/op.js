@@ -21,14 +21,6 @@ var viewModel = {
 			.attr('width', w)
 			.attr('height', h);
 
-		$('.payer-filter').click(function(){
-			$('.update').hide();
-			$('.search-gender').show();
-			$('.search-gender').click(function(){
-				$('.update').show();
-			})
-			
-		});
 		ajaxOp.init();
 		function startMeUp() {
 			filterInfo.init();
@@ -41,7 +33,6 @@ var viewModel = {
 var ajaxOp = {
 
 	init: function(){
-		$('.search-gender').hide();
 		if(model.firstDataInfo()[0] !== undefined){
 			model.firstDataInfo.removeAll();
 		}
@@ -193,40 +184,40 @@ var filterInfo = {
 			.attr('font-size', '11px')
 			.attr('text-anchor', 'middle');
 
-			svg.selectAll('rect')
-				.transition()
-				.attr('x', function(d, i){
-					return i * (w/all.length);
-				})
-				.attr('y', function(d){
-					return h - d; //height minus data value
-				})
-				.attr('width', w/all.length- barPadding)
-				.attr('height', function(d){
-					return d;
-				})
-				.attr('fill', function(d){
-					return "rgb(0,0, " + (d) + ")";
-				})    		
-				.style('fill', function(d){
-	    			if(d > highest - 1){
-	    				return 'red'
-	    			}
-	    		})
-				.duration(650);
-			
-			svg.selectAll('text')
-				.transition()		
-				.text(function(d){
-					return d;
-				})
-				.attr('x', function(d, i){
-					return i * (w/all.length) + 40;
-				})
-				.attr('y', function(d){
-					return h - d + 30;
-				})
-				.duration(650);
+		svg.selectAll('rect')
+			.transition()
+			.attr('x', function(d, i){
+				return i * (w/all.length);
+			})
+			.attr('y', function(d){
+				return h - d; //height minus data value
+			})
+			.attr('width', w/all.length- barPadding)
+			.attr('height', function(d){
+				return d;
+			})
+			.attr('fill', function(d){
+				return "rgb(0,0, " + (d) + ")";
+			})    		
+			.style('fill', function(d){
+    			if(d > highest - 1){
+    				return 'red'
+    			}
+    		})
+			.duration(650);
+		
+		svg.selectAll('text')
+			.transition()		
+			.text(function(d){
+				return d;
+			})
+			.attr('x', function(d, i){
+				return i * (w/all.length) + 40;
+			})
+			.attr('y', function(d){
+				return h - d + 30;
+			})
+			.duration(650);
 
 		}
 	};
