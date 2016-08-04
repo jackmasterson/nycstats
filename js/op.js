@@ -27,7 +27,9 @@ var viewModel = {
 				$('.update').show();
 			})
 			
-		})
+		});
+		ajaxOp.init();
+		setTimeout(startMeUp, 1500);
 	}
 }
 
@@ -63,12 +65,7 @@ var newSearch = -1;
 
 });*/
 
-function startMeUp() {
-	ajaxOp.init();
-	setTimeout(startMeUp, 2000);
-};
 
-startMeUp();
 
 
 var filterInfo = {
@@ -297,6 +294,12 @@ var clear = {
 	}
 };
 
+
+function startMeUp() {
+	//ajaxOp.init();
+	filterInfo.init();
+	setTimeout(startMeUp, 2000);
+};
 
 
 
