@@ -129,6 +129,10 @@ var filterInfo = {
 		var h = 500;
 		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
 		
+		console.log(Math.max.apply(null, all));
+		var highest = Math.max.apply(null, all);
+		
+
 		var barPadding = 1; 
 		var transition = d3.transition();
 		console.log(all);
@@ -163,8 +167,12 @@ var filterInfo = {
 
 		svg.selectAll('rect')
 			.transition()
-    		.style('fill', 'green');
-
+    		.style('fill', function(d){
+    			if(d > highest - 1){
+    				return 'red'
+    			}
+    		})
+    		.duration(650)
 
 
 		svg.selectAll('text')
