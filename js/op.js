@@ -16,20 +16,20 @@ var viewModel = {
 	init: function() {
       	var w = 500;
 		var h = 500;
-		/*var body = d3.select('.op-charts')
+		var body = d3.select('.op-charts')
 			.append('div')
 			.attr('class', 'new-charts')
 			.attr('border', '2px solid black')
 			.append('svg')
 			.attr('width', w)
-			.attr('height', h);*/
+			.attr('height', h);
 
-	//	ajaxOp.init();
+		ajaxOp.init();
 		function startMeUp() {
 			filterInfo.init();
 			setTimeout(startMeUp, 2000);
 		};
-	//	setTimeout(startMeUp, 1500);
+		setTimeout(startMeUp, 1500);
 	}
 }
 
@@ -52,7 +52,7 @@ var ajaxOp = {
 		.done(function(data){
 			model.dataexp.push(data);
 			model.firstDataInfo().push(data);
-		//	filterInfo.init();
+			filterInfo.init();
 		});
 
 	}

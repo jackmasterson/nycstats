@@ -356,6 +356,6 @@ var filter = {
 	}
 };
 
-drawSVG.init();
+//drawSVG.init();
 
-ajaxCause.init();
+//ajaxCause.init();
