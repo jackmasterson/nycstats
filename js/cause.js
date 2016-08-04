@@ -1,8 +1,8 @@
 var drawSVG = {
 
 	init: function() {
-		var w = 500;
-		var h = 500;
+		var w = '100vw';
+		var h = '80vh';
 		var circlePadding = 1;
 		var body = d3.select('.cause-charts')
 			.append('svg')
@@ -12,7 +12,7 @@ var drawSVG = {
 			filter.init();
 			setTimeout(startMeUpAgain, 2000);
 		};
-		//setTimeout(startMeUpAgain, 1500);
+		setTimeout(startMeUpAgain, 1500);
 	}
 };
 
@@ -24,17 +24,10 @@ var ajaxCause = {
 			model.firstDataInfo.removeAll();
 		//}
 	//	ajaxCause.yearSearch = document.getElementsByClassName('year-search')[0];
-		var years = [2007, 2008, 2009, 2010, 2011, 2012];
-		
-		
-		if(model.newSearch < 5){
-			model.newSearch = model.newSearch + 1;
 
-		}
-		console.log(years[model.newSearch]);
 	//	ajaxCause.yearVal = ajaxCause.yearSearch.value;
 		ajaxCause.url = "https://data.cityofnewyork.us/resource/"+
-			"uvxr-2jwn.json?year="+years[model.newSearch]//+ajaxCause.yearVal;
+			"uvxr-2jwn.json?year=2007"//+ajaxCause.yearVal;
 		ajaxCause.render();
 	},
  
@@ -49,6 +42,7 @@ var ajaxCause = {
 			model.firstDataInfo().push(data);
 		//	console.log(model.firstDataInfo()[0]);
 			filter.init();
+
 		});
 
 	}
@@ -59,27 +53,58 @@ var filter = {
 	init: function() {
 		console.log('woo!');
 		var that = this;
+		var years = [2007, 2008, 2009, 2010, 2011, 2012];
 
+	//	console.log(years[model.newSearch + 1]);
+		
+		if(model.newSearch < 5){
+			model.newSearch = model.newSearch + 1;
 
+		}
+		if(model.selectedCause().length !== undefined){
+			model.selectedCause.removeAll();
+		}
+		
 
 		filter.info = model.firstDataInfo()[0];
-		console.log(filter.info);
+		//console.log(filter.info);
 		filter.info.forEach(function(data){
 			var cause = data.cause_of_death;
 			var year = data.year;
 			var eth = data.ethnicity;
-		//	console.log(eth);
+			var count = data.count;
 			var sex = data.sex;
-			if((cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE") &&
-				(sex === "MALE")) {
-				
-				model.causeDataInfo.push(data);
-				model.head(data.cause_of_death);
-				model.year(data.year);
-				model.sex(data.sex);
+			if(count > 2000){
+	//			console.log(data);
+				model.selectedCause.push(data);
 			}
+		//	console.log(eth);
+
 			
 		});
+		model.newSearch = model.newSearch + 1;
+		//console.log(model.selectedCause()[model.newSearch].cause_of_death);
+		var currentCause = model.selectedCause()[model.newSearch].cause_of_death;
+		//model.selectedCause().forEach(function(data){
+		//	console.log(model.selectedCause());
+		model.selectedCause().forEach(function(each){
+
+			var cause = each.cause_of_death;
+			var sex = each.sex;
+			//console.log(cause);
+			console.log(currentCause);
+
+			if((cause = currentCause) &&
+				
+				(sex === "MALE")) {
+				//model.causeDataInfo.removeAll();
+				model.causeDataInfo.push(each);
+				model.head(each.cause_of_death);
+				model.year(each.year);
+				model.sex(each.sex);
+			}
+		})
+		//})
 		filter.cause();
 
 	},
@@ -93,14 +118,16 @@ var filter = {
 
 		var info = model.causeDataInfo();
 		info.forEach(function(data){
-			console.log(data);
-			console.log(data.ethnicity);
+		//	console.log(data);
+		//	console.log(data.ethnicity);
+		//	console.log(data);
 			if(data.ethnicity === "NON-HISPANIC BLACK"){
 				blackArray.push(data);
-				//console.log(data);
+			//	console.log(data);
 			}
 			if(data.ethnicity === "NON-HISPANIC WHITE"){
 				whiteArray.push(data);
+				//console.log(data);
 			}
 			if(data.ethnicity === "HISPANIC"){
 				hispArray.push(data);
@@ -113,37 +140,47 @@ var filter = {
 		var black = blackArray[0];
 		var white = whiteArray[0];
 		var hispanic = hispArray[0];
-		//var asian = asianArray[0].count;
-		//console.log(black, white, hispanic);
-		useInfo.push(black.count, white.count, hispanic.count);//, asian);
-	//	console.log(useInfo);
-		var textInfo = [black.ethnicity, white.ethnicity, hispanic.ethnicity];
+		var asian = asianArray[0];
 
 
-		var w = 500;
-		var h = 500;
+		if(black){
+			useInfo.push(black.count)
+		}
+		if(white){
+			useInfo.push(white.count)
+		}
+		if(hispanic){
+			useInfo.push(hispanic.count)
+		}
+		if(asian){
+			useInfo.push(asian.count)
+		}
+
+		//console.log(useInfo);
+		var w = '100vw';
+		var h = '80vh';
 		var svg = d3.select('svg');
 		var transition = d3.transition();
 
-		svg.selectAll('rect')
+		svg.selectAll('circle')
 			.data(useInfo)
 			.enter()
-			.append('rect')
-			.attr('x', function(d, i){
-				return i * (w/useInfo.length);
+			.append('circle')
+			.attr('cx', function(d, i){
+				return d/40 + 325;
 			})
-			.attr('y', function(d){
-				return h - d; //height minus data value
+			.attr('cy', function(d){
+				return d/100 + 325; 
 			})
-			.attr('width', w/useInfo.length - 1)
-			.attr('height', function(d){
-				return d;
+			.attr('r', function(d, i){
+				return d/100;
 			})
 			.attr('fill', function(d){
+				d = d - 1900;
 				return "rgb(0,0, " + (d) + ")";
 			})
 
-		svg.selectAll('text')
+		/*svg.selectAll('text')
 			.data(useInfo)
 			.enter()
 			.append('text')
@@ -160,24 +197,25 @@ var filter = {
 			.attr('font-family', 'sans-serif')
 			.attr('font-size', '11px')
 			.attr('text-anchor', 'middle');
-
-		svg.selectAll('rect')
+*/
+		svg.selectAll('circle')
 			.transition()
-			.attr('x', function(d, i){
-				return i * (w/useInfo.length);
+			.attr('fill', 'green')
+			.attr('cx', function(d, i){
+				return d/40 + 325;
 			})
-			.attr('y', function(d){
-				return h - d; //height minus data value
+			.attr('cy', function(d){
+				return d/100 + 325; 
 			})
-			.attr('width', w/useInfo.length- 1)
-			.attr('height', function(d){
-				return d;
+			.attr('r', function(d, i){
+				return d/100;
 			})
 			.attr('fill', function(d){
+				d = d - 1900;
 				return "rgb(0,0, " + (d) + ")";
 			})
 			.duration(650);
-		
+		/*
 		svg.selectAll('text')
 			.transition()		
 			.text(function(d){
@@ -191,7 +229,7 @@ var filter = {
 			})
 			.duration(650);
 
-
+*/
 
 
 	},
@@ -318,6 +356,6 @@ var filter = {
 	}
 };
 
-//drawSVG.init();
+drawSVG.init();
 
-//ajaxCause.init();
+ajaxCause.init();
