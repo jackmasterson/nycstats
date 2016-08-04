@@ -3,7 +3,8 @@ var model = {
 	lastDataInfo: ko.observableArray(),
 	causeDataInfo: ko.observableArray(),
 	selectedCause: ko.observable(),
-	dataset: []
+	dataset: [],
+	dataexp: ko.observableArray()
 };
 
 var viewModel = {
@@ -30,7 +31,7 @@ var ajaxOp = {
 			dataType: "json"
 		})
 		.done(function(data){
-
+			model.dataexp.push(data);
 			model.firstDataInfo().push(data);
 			filterInfo.init();
 		});
@@ -123,60 +124,13 @@ var filterInfo = {
 		var thirteen = parseInt(filterInfo.thirteenArr[0].overall_opioid);
 		var fourteen = parseInt(filterInfo.fourteenArr[0].overall_opioid);
 		var fifteen = parseInt(filterInfo.fifteenArr[0].overall_opioid);
-		/*var eleven = [filterInfo.elevenArr[0].year,
-			parseInt(filterInfo.elevenArr[0].overall_opioid)];
-		var twelve = [filterInfo.twelveArr[0].year,
-			parseInt(filterInfo.twelveArr[0].overall_opioid)];
-		var thirteen = [filterInfo.thirteenArr[0].year,
-			parseInt(filterInfo.thirteenArr[0].overall_opioid)];
-		var fourteen = [filterInfo.fourteenArr[0].year,
-			parseInt(filterInfo.fourteenArr[0].overall_opioid)];
-		var fifteen = [filterInfo.fifteenArr[0].year,
-			parseInt(filterInfo.fifteenArr[0].overall_opioid)];
 
-  		var barId = filterInfo.causeVal+"_chart_"+filterInfo.genVal+"_bar";
-  		var pieId = filterInfo.causeVal+"_chart_"+filterInfo.genVal+"_pie";
-  		var barEl = "<div class='chart "+filterInfo.genVal+"' id='"+barId+"'></div>";
-		var pieEl = "<div class='chart "+filterInfo.genVal+"' id='"+pieId+"'></div>";
-		//	console.log(barEl);
-		//$('.first').prepend(countEl);
-  		$('.op-first').prepend(pieEl);
-  		//console.log(document.getElementsByClassName('first')[0]);
-  		$('.op-first').prepend(barEl);
-  		
-  		var counter = document.getElementsByClassName('count-span')[0];
-
-
-		filterInfo.charted = [ten, eleven, twelve, thirteen, fourteen, fifteen];
-
-        function drawChart() {
-
-      	 var data = new google.visualization.DataTable();
-      		data.addColumn("string", "Year", "year");
-      		data.addColumn("number", "Number of Visits", "number");
-      		data.addRows(filterInfo.charted);
-
-      		var options = {"title": "Opioid Hospital Visits in NYC paid by "+filterInfo.payerVal,
-      					   "width": 350,
-      					   "height": 400};
-
-      		var pie = document.getElementById(filterInfo.causeVal+'_chart_'+filterInfo.genVal+'_pie');
-      	//	console.log(pie);
-      		var bar = document.getElementById(filterInfo.causeVal+'_chart_'+filterInfo.genVal+'_bar');
-     	//	if(filter.chartVal === "PieChart"){
-	      		var lineChart = new google.visualization.LineChart(pie);
-	      //	}
-	      	//if(filter.chartVal === "BarChart"){
-	      		var barChart = new google.visualization.BarChart(bar);
-	      	//}
-      		lineChart.draw(data, options);
-      		barChart.draw(data, options);
-      };*/
       	var w = 500;
 		var h = 500;
 		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
 		
 		var barPadding = 1; 
+		var transition = d3.transition();
 		console.log(all);
 		//create SVG element
 		var body = d3.select('.op-charts')
@@ -204,8 +158,14 @@ var filterInfo = {
 				return d;
 			})
 			.attr('fill', function(d){
-				return "rgb(0,0, " + (d * 10) + ")";
+				return "rgb(0,0, " + (d) + ")";
 			});
+
+		svg.selectAll('rect')
+			.transition()
+    		.style('fill', 'green');
+
+
 
 		svg.selectAll('text')
 			.data(all)
@@ -223,9 +183,11 @@ var filterInfo = {
 			.attr('fill', 'white')
 			.attr('font-family', 'sans-serif')
 			.attr('font-size', '11px')
-			.attr('text-anchor', 'middle');
-	}
-};
+			.attr('text-anchor', 'middle')
+
+			
+		}
+	};
 
 var clear = {
 
@@ -235,13 +197,6 @@ var clear = {
 };
 
 
-
-var clear = {
-
-	init: function() {
-
-	}
-};
 
 
 
