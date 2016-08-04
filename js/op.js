@@ -192,6 +192,17 @@ var filterInfo = {
 			.attr('font-family', 'sans-serif')
 			.attr('font-size', '11px')
 			.attr('text-anchor', 'middle')
+			.transition()
+			.style('font-size', function(d){
+				if(d > highest -1 ){
+					return '15px'
+				}
+				else {
+					return '9px'
+				}
+			})
+			.delay(1000)
+			.duration(650)
 
 			
 		}
