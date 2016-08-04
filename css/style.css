@@ -24,6 +24,10 @@ select {
 	background-size: cover;
 }
 
+.search-gender {
+	display: none;
+}
+
 .landing-head {
 	padding: 20px;
 }
@@ -120,6 +124,16 @@ select {
 	left: 0;
 }
 
+.op-charts {
+	display: block;
+}
+
 .new-charts {
 	margin-bottom: 25px;
 }
+
+.update {
+
+	margin-top: 5vh;
+}
+

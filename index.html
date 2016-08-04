@@ -7,45 +7,15 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="landing">
-	<div class="shade">
-		<h1 class="landing-head">Which do you want to see?</h1>
-		<div class="landing-subhead">
-			<h3>
-				<a class="landing-href" href="#/" data-bind="click: toggle.opInfo">NYC Opioid Hospital Visits Based on Payer, 2010-2015</a>
-			</h3>
-			<img class="landing-img" src="img/hospital.png">
-		</div>
-		<div class="landing-subhead">
-			<h3>
-				<a class="landing-href" href="#/" data-bind="click: toggle.causeInfo">Top Causes of Death in NYC Broken Down by Ethnicity, 2007-2011</a>
-			</h3>
-			<img class="landing-img" src="img/NYC.png">
-		</div>
-	</div>
-</div>
 <div class="background op-charts">
 	<div class="shade">
 		<h1 class="header">NYC Opioid Hospital Visits, 2010-2015</h1>
-		<div class="search-param-div">
-			<span>Payer</span>
-			<select class="payer-filter" name="Payer">
-				<option class="payer-opt" value="Medicare">Medicare</option>
-				<option class="payer-opt" value="Medicaid">Medicaid</option>
-				<option class="payer-opt" value="Commercial">Commercial</option>
-			</select>
-			<button data-bind="click: ajaxOp.init" class="search-gender">Search!</button>
-		</div>
+
+			<button class='update'>Update Data!</button>
+			<h1 class="head" data-bind="text: model.head"></h1>
 		<div class="op-first"></div>
-			<div class="back-to-landing">
-		<h2 class="back-header sub-header">
-			<a class="landing-href" href="#/" data-bind="click: toggle.back">Back
-			</a>
-		</h2>
 	</div>
-	<button class='update'>Update Data!</button>
-	</div>
-	<h4 class="sub-header">Data provided by Socrata Open Data Network, Charts by Google</h4>
+	<h4 class="sub-header">Data provided by Socrata Open Data Network</h4>
 </div>
 <div class="background cause-charts">
 	<div class="shade">

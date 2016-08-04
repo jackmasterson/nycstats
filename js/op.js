@@ -4,7 +4,8 @@ var model = {
 	causeDataInfo: ko.observableArray(),
 	selectedCause: ko.observable(),
 	dataset: [],
-	dataexp: ko.observableArray()
+	dataexp: ko.observableArray(),
+	head: ko.observableArray('')
 };
 
 var viewModel = {
@@ -18,15 +19,25 @@ var viewModel = {
 			.append('svg')
 			.attr('width', w)
 			.attr('height', h);
+
+		$('.payer-filter').click(function(){
+			$('.update').hide();
+			$('.search-gender').show();
+			$('.search-gender').click(function(){
+				$('.update').show();
+			})
+			
+		})
 	}
 }
 
 var ajaxOp = {
 
 	init: function(){
-
+		$('.search-gender').hide();
 		if(model.firstDataInfo()[0] !== undefined){
 			model.firstDataInfo.removeAll();
+			console.log(model.firstDataInfo());
 		}
 		ajaxOp.render();
 	},
@@ -46,19 +57,45 @@ var ajaxOp = {
 
 	}
 }
+var tryIt = -1;
+$('.update').click(function() {
+	ajaxOp.init();
+
+});
 
 var filterInfo = {
 	
 	init: function() {
 		var that = this;
-
+		
+		//	console.log(filterInfo.payerVal);
+			var payered = ['Medicare', 'Medicaid', 'Commercial'];
+			var len = payered.length;
+			
+				//for(var t = 0; t < len; t++){
+				//	console.log(payered[t]);
+				if(tryIt < 2){
+					tryIt = tryIt + 1;
+					
+					filterInfo.payerVal = payered[tryIt];
+					console.log(filterInfo.payerVal);
+					
+				}
+					
+				//}
+	
 		filterInfo.info = model.firstDataInfo()[0];
 		filterInfo.genArr = [];
 
-		filterInfo.payer = document.getElementsByClassName('payer-filter')[0];
-		filterInfo.payerVal = filterInfo.payer.value;
+	//	filterInfo.payer = document.getElementsByClassName('payer-filter')[0];
+	//	filterInfo.payerVal = filterInfo.payer.value;
+		console.log(filterInfo.payerVal);
+		model.head(filterInfo.payerVal);
+	//	var head = '<h1>'+filterInfo.payerVal+'</h1>';
+
 
 		filterInfo.info.forEach(function(data){
+			//console.log(data);
 		//	console.log(data);
 		//	console.log(data.payer, data.overall_opioid, data.year);
 			var both = filterInfo.payerVal === data.payer;
@@ -94,6 +131,7 @@ var filterInfo = {
 			
 			if(ten){
 				filterInfo.tenArr.push(more);
+				console.log(more);
 				model.dataset.push(more);
 			}
 			if(eleven){
@@ -135,7 +173,6 @@ var filterInfo = {
 
 
 		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
-		
 		console.log(Math.max.apply(null, all));
 		var highest = Math.max.apply(null, all);
 		
@@ -211,7 +248,7 @@ var filterInfo = {
 
 
 
-			$('.update').click(function(){
+		//	$('.update').click(function(){
 				svg.selectAll('rect')
 					.transition()
 					.attr('x', function(d, i){
@@ -252,7 +289,8 @@ var filterInfo = {
 					})
 					.delay(1000)
 					.duration(650)
-					});
+			//		});
+
 
 
 		}
@@ -264,7 +302,6 @@ var clear = {
 
 	}
 };
-
 
 
 
