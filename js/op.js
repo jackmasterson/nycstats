@@ -123,7 +123,6 @@ var filterInfo = {
 		var thirteen = parseInt(filterInfo.thirteenArr[0].overall_opioid);
 		var fourteen = parseInt(filterInfo.fourteenArr[0].overall_opioid);
 		var fifteen = parseInt(filterInfo.fifteenArr[0].overall_opioid);
-		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
 		/*var eleven = [filterInfo.elevenArr[0].year,
 			parseInt(filterInfo.elevenArr[0].overall_opioid)];
 		var twelve = [filterInfo.twelveArr[0].year,
@@ -175,6 +174,8 @@ var filterInfo = {
       };*/
       	var w = 500;
 		var h = 500;
+		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
+		
 		var barPadding = 1; 
 		console.log(all);
 		//create SVG element
@@ -205,6 +206,24 @@ var filterInfo = {
 			.attr('fill', function(d){
 				return "rgb(0,0, " + (d * 10) + ")";
 			});
+
+		svg.selectAll('text')
+			.data(all)
+			.enter()
+			.append('text')
+			.text(function(d){
+				return d;
+			})
+			.attr('x', function(d, i){
+				return i * (w/all.length) + 40;
+			})
+			.attr('y', function(d){
+				return h - d + 30;
+			})
+			.attr('fill', 'white')
+			.attr('font-family', 'sans-serif')
+			.attr('font-size', '11px')
+			.attr('text-anchor', 'middle');
 	}
 };
 
