@@ -2,7 +2,8 @@ var model = {
 	firstDataInfo: ko.observableArray(),
 	lastDataInfo: ko.observableArray(),
 	causeDataInfo: ko.observableArray(),
-	selectedCause: ko.observable()
+	selectedCause: ko.observable(),
+	dataset: []
 };
 
 var viewModel = {
@@ -54,6 +55,7 @@ var filterInfo = {
 			var both = filterInfo.payerVal === data.payer;
 			if(both){
 				filterInfo.genArr.push(data);
+				console.log(data);
 			}
 		});
 
@@ -72,6 +74,7 @@ var filterInfo = {
 
 		filterInfo.genArr.forEach(function(more){
 		//	console.log(more);
+			
 			var year = more.year;
 			var ten = year === "2010";
 			var eleven = year === "2011";
@@ -82,21 +85,27 @@ var filterInfo = {
 			
 			if(ten){
 				filterInfo.tenArr.push(more);
+				model.dataset.push(more);
 			}
 			if(eleven){
 				filterInfo.elevenArr.push(more);
+				model.dataset.push(more);
+			//	model.dataset.pu
 			}
 			if(twelve){
 				filterInfo.twelveArr.push(more);
+				model.dataset.push(more);
 			}
 			if(thirteen){
 				filterInfo.thirteenArr.push(more);
+				model.dataset.push(more);
 			}
 			if(fourteen){
 				filterInfo.fourteenArr.push(more);
 			}
 			if(fifteen){
 				filterInfo.fifteenArr.push(more);
+				model.dataset.push(more);
 			}
 		});
 		filterInfo.chartIt();
@@ -104,11 +113,18 @@ var filterInfo = {
 	},
 
 	chartIt: function() {
-		google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawChart});
+	//	google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawChart});
       	
-		var ten = [filterInfo.tenArr[0].year,
-			parseInt(filterInfo.tenArr[0].overall_opioid)];
-		var eleven = [filterInfo.elevenArr[0].year,
+		var ten = //[filterInfo.tenArr[0].year,
+			parseInt(filterInfo.tenArr[0].overall_opioid);//];
+
+		var eleven = parseInt(filterInfo.elevenArr[0].overall_opioid);
+		var twelve = parseInt(filterInfo.twelveArr[0].overall_opioid);
+		var thirteen = parseInt(filterInfo.thirteenArr[0].overall_opioid);
+		var fourteen = parseInt(filterInfo.fourteenArr[0].overall_opioid);
+		var fifteen = parseInt(filterInfo.fifteenArr[0].overall_opioid);
+		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
+		/*var eleven = [filterInfo.elevenArr[0].year,
 			parseInt(filterInfo.elevenArr[0].overall_opioid)];
 		var twelve = [filterInfo.twelveArr[0].year,
 			parseInt(filterInfo.twelveArr[0].overall_opioid)];
@@ -156,7 +172,39 @@ var filterInfo = {
 	      	//}
       		lineChart.draw(data, options);
       		barChart.draw(data, options);
-      };
+      };*/
+      	var w = 500;
+		var h = 500;
+		var barPadding = 1; 
+		console.log(all);
+		//create SVG element
+		var body = d3.select('.op-charts')
+			.append('div')
+			.attr('class', 'new-charts')
+			.attr('border', '2px solid black');
+
+		var svg = body
+					.append('svg')
+					.attr('width', w)
+					.attr('height', h);
+
+		svg.selectAll('rect')
+			.data(all)
+			.enter()
+			.append('rect')
+			.attr('x', function(d, i){
+				return i * (w/all.length);
+			})
+			.attr('y', function(d){
+				return h - d; //height minus data value
+			})
+			.attr('width', w/all.length- barPadding)
+			.attr('height', function(d){
+				return d;
+			})
+			.attr('fill', function(d){
+				return "rgb(0,0, " + (d * 10) + ")";
+			});
 	}
 };
 
@@ -205,7 +253,9 @@ var toggle = {
 	getChart: function() {
 		console.log("inch by inch");
 	}
-}
+};
+
+
 
 
 

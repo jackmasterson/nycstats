@@ -71,6 +71,11 @@ select {
 	overflow-y: scroll;
 }
 
+.op-first {
+	height: 100vh;
+	overflow-y: scroll;
+}
+
 .label {
 	text-align: left;
 }
@@ -113,4 +118,8 @@ select {
 	padding: 0;
 	color: white;
 	left: 0;
+}
+
+.new-charts {
+	margin-bottom: 25px;
 }
