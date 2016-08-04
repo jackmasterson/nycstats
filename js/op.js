@@ -74,6 +74,9 @@ var filterInfo = {
 			
 				//for(var t = 0; t < len; t++){
 				//	console.log(payered[t]);
+				if(tryIt === 2){
+					tryIt = -1;
+				}
 				if(tryIt < 2){
 					tryIt = tryIt + 1;
 					
@@ -81,6 +84,7 @@ var filterInfo = {
 					console.log(filterInfo.payerVal);
 					
 				}
+
 					
 				//}
 	
