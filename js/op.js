@@ -9,7 +9,15 @@ var model = {
 
 var viewModel = {
 	init: function() {
-
+      	var w = 500;
+		var h = 500;
+		var body = d3.select('.op-charts')
+			.append('div')
+			.attr('class', 'new-charts')
+			.attr('border', '2px solid black')
+			.append('svg')
+			.attr('width', w)
+			.attr('height', h);
 	}
 }
 
@@ -125,8 +133,7 @@ var filterInfo = {
 		var fourteen = parseInt(filterInfo.fourteenArr[0].overall_opioid);
 		var fifteen = parseInt(filterInfo.fifteenArr[0].overall_opioid);
 
-      	var w = 500;
-		var h = 500;
+
 		var all = [ten, eleven, twelve, thirteen, fourteen, fifteen];
 		
 		console.log(Math.max.apply(null, all));
@@ -137,15 +144,13 @@ var filterInfo = {
 		var transition = d3.transition();
 		console.log(all);
 		//create SVG element
-		var body = d3.select('.op-charts')
-			.append('div')
-			.attr('class', 'new-charts')
-			.attr('border', '2px solid black');
 
-		var svg = body
-					.append('svg')
-					.attr('width', w)
-					.attr('height', h);
+
+		var update = d3.select('svg').transition();
+
+		var w = 500;
+		var h = 500;
+		var svg = d3.select('svg');
 
 		svg.selectAll('rect')
 			.data(all)
@@ -163,7 +168,7 @@ var filterInfo = {
 			})
 			.attr('fill', function(d){
 				return "rgb(0,0, " + (d) + ")";
-			});
+			})
 
 		svg.selectAll('rect')
 			.transition()
@@ -204,7 +209,27 @@ var filterInfo = {
 			.delay(1000)
 			.duration(650)
 
-			
+
+
+			$('.update').click(function(){
+				svg.selectAll('rect')
+					.transition()
+					.attr('x', function(d, i){
+						return i * (w/all.length);
+					})
+					.attr('y', function(d){
+						return h - d; //height minus data value
+					})
+					.attr('width', w/all.length- barPadding)
+					.attr('height', function(d){
+						return d;
+					})
+					.attr('fill', function(d){
+						return "rgb(0,0, " + (d) + ")";
+					})
+			});
+
+
 		}
 	};
 
