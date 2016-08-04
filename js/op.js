@@ -227,7 +227,32 @@ var filterInfo = {
 					.attr('fill', function(d){
 						return "rgb(0,0, " + (d) + ")";
 					})
-			});
+				svg.selectAll('text')		
+					.text(function(d){
+						return d;
+					})
+					.attr('x', function(d, i){
+						return i * (w/all.length) + 40;
+					})
+					.attr('y', function(d){
+						return h - d + 30;
+					})
+					.attr('fill', 'white')
+					.attr('font-family', 'sans-serif')
+					.attr('font-size', '11px')
+					.attr('text-anchor', 'middle')
+					.transition()
+					.style('font-size', function(d){
+						if(d > highest -1 ){
+							return '15px'
+						}
+						else {
+							return '9px'
+						}
+					})
+					.delay(1000)
+					.duration(650)
+					});
 
 
 		}
