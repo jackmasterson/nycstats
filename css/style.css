@@ -124,11 +124,7 @@ select {
 	left: 0;
 }
 
-.head {
-	padding-top: 25px;
-}
-
-.cause-charts {
+.op-charts {
 	display: block;
 }
 

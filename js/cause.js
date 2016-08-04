@@ -1,15 +1,40 @@
+var drawSVG = {
+
+	init: function() {
+		var w = 500;
+		var h = 500;
+		var circlePadding = 1;
+		var body = d3.select('.cause-charts')
+			.append('svg')
+			.attr('width', w)
+			.attr('height', h);
+		function startMeUpAgain() {
+			filter.init();
+			setTimeout(startMeUpAgain, 2000);
+		};
+		//setTimeout(startMeUpAgain, 1500);
+	}
+};
+
 var ajaxCause = {
 
 	init: function(){
 
-		if(model.firstDataInfo()[0] !== undefined){
+		//if(model.firstDataInfo()[0] !== undefined){
 			model.firstDataInfo.removeAll();
-		}
-		ajaxCause.yearSearch = document.getElementsByClassName('year-search')[0];
+		//}
+	//	ajaxCause.yearSearch = document.getElementsByClassName('year-search')[0];
+		var years = [2007, 2008, 2009, 2010, 2011, 2012];
+		
+		
+		if(model.newSearch < 5){
+			model.newSearch = model.newSearch + 1;
 
-		ajaxCause.yearVal = ajaxCause.yearSearch.value;
+		}
+		console.log(years[model.newSearch]);
+	//	ajaxCause.yearVal = ajaxCause.yearSearch.value;
 		ajaxCause.url = "https://data.cityofnewyork.us/resource/"+
-			"uvxr-2jwn.json?year="+ajaxCause.yearVal;
+			"uvxr-2jwn.json?year="+years[model.newSearch]//+ajaxCause.yearVal;
 		ajaxCause.render();
 	},
  
@@ -22,7 +47,7 @@ var ajaxCause = {
 		})
 		.done(function(data){
 			model.firstDataInfo().push(data);
-
+		//	console.log(model.firstDataInfo()[0]);
 			filter.init();
 		});
 
@@ -32,56 +57,143 @@ var ajaxCause = {
 var filter = {
 	
 	init: function() {
+		console.log('woo!');
 		var that = this;
 
+
+
 		filter.info = model.firstDataInfo()[0];
-		filter.gender = document.getElementsByClassName('gender-filter')[0];
-		filter.causeFilt = document.getElementsByClassName('cause-filter')[0];
-		filter.chartFilt = document.getElementsByClassName('chart-filter')[0];
-		filter.genVal = filter.gender.value;
-		filter.causeVal = filter.causeFilt.value;
-
-		if(filter.genVal === "male"){
-			filter.male();
-		}
-		if(filter.genVal === "female"){
-			filter.female();
-		}
+		console.log(filter.info);
+		filter.info.forEach(function(data){
+			var cause = data.cause_of_death;
+			var year = data.year;
+			var eth = data.ethnicity;
+		//	console.log(eth);
+			var sex = data.sex;
+			if((cause === "HUMAN IMMUNODEFICIENCY VIRUS DISEASE") &&
+				(sex === "MALE")) {
+				
+				model.causeDataInfo.push(data);
+				model.head(data.cause_of_death);
+				model.year(data.year);
+				model.sex(data.sex);
+			}
+			
+		});
+		filter.cause();
 
 	},
 
-	male: function() {
+	cause: function() {
+	//	console.log(model.causeDataInfo());
+		var blackArray = [];
+		var whiteArray = [];
+		var hispArray = [];
+		var asianArray = [];
 
-		filter.genArr = [];
-		this.info.forEach(function(data){
-			filter.sex = data.sex;
-			if(filter.sex === "MALE"){
-
-				filter.genArr.push(data);
-				var cause = data.cause_of_death;
-				model.causeDataInfo.push(cause);
+		var info = model.causeDataInfo();
+		info.forEach(function(data){
+			console.log(data);
+			console.log(data.ethnicity);
+			if(data.ethnicity === "NON-HISPANIC BLACK"){
+				blackArray.push(data);
+				//console.log(data);
 			}
-		
-		});
-		$('.hidden-cause').show();
-	},
-
-	female: function() {
-
-		filter.genArr = [];
-		
-		this.info.forEach(function(data){
-			filter.sex = data.sex;
-			if(filter.sex === "FEMALE"){
-
-				filter.genArr.push(data);			
-				var cause = data.cause_of_death;
-
-				model.causeDataInfo.push(cause);
+			if(data.ethnicity === "NON-HISPANIC WHITE"){
+				whiteArray.push(data);
 			}
-		});
-		$('.hidden-cause').show();
+			if(data.ethnicity === "HISPANIC"){
+				hispArray.push(data);
+			}
+			if(data.ethnicity === "ASIAN & PACIFIC ISLANDER"){
+				asianArray.push(data);
+			}
+		})
+		var useInfo = [];
+		var black = blackArray[0];
+		var white = whiteArray[0];
+		var hispanic = hispArray[0];
+		//var asian = asianArray[0].count;
+		//console.log(black, white, hispanic);
+		useInfo.push(black.count, white.count, hispanic.count);//, asian);
+	//	console.log(useInfo);
+		var textInfo = [black.ethnicity, white.ethnicity, hispanic.ethnicity];
+
+
+		var w = 500;
+		var h = 500;
+		var svg = d3.select('svg');
+		var transition = d3.transition();
+
+		svg.selectAll('rect')
+			.data(useInfo)
+			.enter()
+			.append('rect')
+			.attr('x', function(d, i){
+				return i * (w/useInfo.length);
+			})
+			.attr('y', function(d){
+				return h - d; //height minus data value
+			})
+			.attr('width', w/useInfo.length - 1)
+			.attr('height', function(d){
+				return d;
+			})
+			.attr('fill', function(d){
+				return "rgb(0,0, " + (d) + ")";
+			})
+
+		svg.selectAll('text')
+			.data(useInfo)
+			.enter()
+			.append('text')
+			.text(function(d){
+				return d;
+			})
+			.attr('x', function(d, i){
+				return i * (w/useInfo.length) + 40;
+			})
+			.attr('y', function(d){
+				return h - d + 30;
+			})
+			.attr('fill', 'white')
+			.attr('font-family', 'sans-serif')
+			.attr('font-size', '11px')
+			.attr('text-anchor', 'middle');
+
+		svg.selectAll('rect')
+			.transition()
+			.attr('x', function(d, i){
+				return i * (w/useInfo.length);
+			})
+			.attr('y', function(d){
+				return h - d; //height minus data value
+			})
+			.attr('width', w/useInfo.length- 1)
+			.attr('height', function(d){
+				return d;
+			})
+			.attr('fill', function(d){
+				return "rgb(0,0, " + (d) + ")";
+			})
+			.duration(650);
 		
+		svg.selectAll('text')
+			.transition()		
+			.text(function(d){
+				return d;
+			})
+			.attr('x', function(d, i){
+				return i * (w/useInfo.length) + 40;
+			})
+			.attr('y', function(d){
+				return h - d + 30;
+			})
+			.duration(650);
+
+
+
+
 	},
 
 	chartDisease: function() {
@@ -205,3 +317,7 @@ var filter = {
       };
 	}
 };
+
+//drawSVG.init();
+
+//ajaxCause.init();
